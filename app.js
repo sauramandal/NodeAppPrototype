@@ -15,8 +15,7 @@ app.use(bodyParser.json());
 app.listen(port, function() {
     console.log(`Express server started on port: ${port}`);
 });
-app.use(verifyToken); //middleware to verify the token
 
 app.post('/signup', addNewUser);
-app.post('/login', userLoginCheck);
-app.get('/users', findAllUsers);
+app.post('/login', verifyToken, userLoginCheck);
+app.get('/users', verifyToken, findAllUsers);

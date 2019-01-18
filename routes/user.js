@@ -1,8 +1,8 @@
 const mysql = require('mysql');
 const express = require('express');
-const md5 = require('MD5');
+const md5 = require('md5');
 const jwt = require('jsonwebtoken');
-const connection = require('./../database');
+const {connection} = require('./../database');
 
 var addNewUser = (req, res) => {
     var date = new Date();
@@ -13,8 +13,13 @@ var addNewUser = (req, res) => {
         password: md5(req.body.password),
         dob: req.body.dob,
         phone_number: req.body.phone_number,
+        access_token: req.body.access_token,
         device_type: req.body.device_type,
-        device_token: req.body.device_token
+        device_token: req.body.device_token,
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
+        is_verified: req.body.is_verified,
+        block_status: req.body.block_status
     };
     console.log(post);
     var queryString = "SELECT email FROM ?? WHERE ?? = ?";
@@ -33,11 +38,11 @@ var addNewUser = (req, res) => {
                 var queryString = "INSERT INTO ?? SET ?";
                 var table = ["user"];
                 queryString = mysql.format(queryString, table);
-                connection.query(queryString, (err, rows) => {
+                connection.query(queryString, post, (err, rows) => {
                     if(err) {
                         res.json({"Error": true, "Message": "Error executing Mysql query"});
                     } else {
-                        res.json({"Error": true, "Message": "Success"});
+                        res.json({"Error": false, "Message": "Success"});
                     }
                 });
             }
