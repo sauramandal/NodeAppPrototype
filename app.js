@@ -2,10 +2,11 @@ const express = require('express');
 const http = require('http');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
+const jwt = require('jsonwebtoken');
 const config = require('./config');
+const {ensureToken} = require('./middleware/ensureToken');
 
-const {addNewUser, userLoginCheck, findAllUsers} = require('./routes/user');
-const {verifyToken} = require('./middleware/verifyToken');
+const {addNewUser, userLoginCheck, findAllUsers, myProtectedRoute} = require('./routes/user');
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -17,5 +18,7 @@ app.listen(port, function() {
 });
 
 app.post('/signup', addNewUser);
-app.post('/login', verifyToken, userLoginCheck);
-app.get('/users', verifyToken, findAllUsers);
+app.post('/login', userLoginCheck);
+app.get('/users', findAllUsers);
+app.get('/privateRoute', ensureToken, myProtectedRoute);
+

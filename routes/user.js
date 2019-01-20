@@ -3,6 +3,7 @@ const express = require('express');
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
 const {connection} = require('./../database');
+const config = require('./../config');
 
 var addNewUser = (req, res) => {
     var date = new Date();
@@ -13,7 +14,6 @@ var addNewUser = (req, res) => {
         password: md5(req.body.password),
         dob: req.body.dob,
         phone_number: req.body.phone_number,
-        access_token: req.body.access_token,
         device_type: req.body.device_type,
         device_token: req.body.device_token,
         latitude: req.body.latitude,
@@ -63,33 +63,31 @@ var userLoginCheck = (req, res) => {
             res.json({"Error": true, "Message": "Error executing Mysql query"});
         } else {
             if(rows.length == 1) {
+                //const user = {id: rows[0].userid};
+                //var userdata = rows[0].userid;
                 //user exist in db, with the email and password
-                var token = jwt.sign(rows, config.secret, { expiresIn: 1440 });
-                user_id = rows[0].userid;
-                var data = {
-                    user_id: rows[0].userid,
-                    access_token: token,
-                    device_token: rows[0].device_token
-                };
-                var queryString = "INSERT INTO ?? SET ?";
-                var values = ["access_token"];
-                queryString = mysql.format(queryString, values);
-                connection.query(queryString, data, (err, rows) => {
-                    if(err) {
-                        res.json({"Error": true, "Message": "Error in executing mysql query"});
-                    } else { 
-                        //return token info
-                        res.json({
-                            success: true,
-                            message: 'Token Generated',
-                            token: token,
-                            currUser: user_id
-                        });
-                    }
+                var token = jwt.sign({rows}, config.secret, { expiresIn: 1440 });
+                console.log(token);
+                res.json({
+                    success: true,
+                    message: 'Token Generated',
+                    token: token
                 });
             } else {
                 res.json({"Error": true, "Message": "Incorrect email/password"});
             }
+        }
+    });
+};
+
+var myProtectedRoute = (req, res) => {
+    jwt.verify(req.token, config.secret, function(err, data) {
+        console.log('Hi');
+        if(err) {
+            console.log(err);
+            res.sendStatus(403);
+        } else {
+            res.json({text: 'Protected Info', data: data});
         }
     });
 };
@@ -107,4 +105,4 @@ var findAllUsers = (req, res) => {
     });
 };
 
-module.exports = {addNewUser, userLoginCheck, findAllUsers};
+module.exports = {addNewUser, userLoginCheck, findAllUsers, myProtectedRoute};
