@@ -1,20 +1,24 @@
 const express = require('express');
+const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
-//const expressValidator = require('express-validator');
 const config = require('./config');
+
 const {ensureToken} = require('./middleware/ensureToken');
 const {check, validationResult} = require('express-validator/check');
-
 const {addNewUser, userLoginCheck, findAllUsers, myProtectedRoute} = require('./routes/user');
 
 var app = express();
 var port = process.env.PORT || 3000;
-//set up middlewares
+
+//set up/configure express middlewares
+app.set('views', __dirname + '/views'); //set express to look in this directory to render views
+app.set('view engine', 'ejs'); //configure template engine
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public'))); //configure express to use public folder
 app.listen(port, function() {
     console.log(`Express server started on port: ${port}`);
 });

@@ -10,11 +10,13 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-validator": "^5.3.1",
     "http": "0.0.0",
     "jsonwebtoken": "^8.4.0",
     "md5": "^2.2.1",
-    "mysql": "^2.16.0"
+    "mysql": "^2.16.0",
+    "path": "^0.12.7"
   }
 }
