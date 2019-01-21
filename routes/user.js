@@ -4,6 +4,7 @@ const md5 = require('md5');
 const jwt = require('jsonwebtoken');
 const {connection} = require('./../database');
 const config = require('./../config');
+const {validationResult} = require('express-validator/check');
 
 var addNewUser = (req, res) => {
     var date = new Date();
@@ -51,6 +52,11 @@ var addNewUser = (req, res) => {
 };
 
 var userLoginCheck = (req, res) => {
+    console.log(req.body);
+    var errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        res.status(400).json(errors.array());
+    } 
     var post = {
         email: req.body.email,
         password: req.body.password
