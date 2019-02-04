@@ -90,28 +90,29 @@ module.exports = {
     });
   },
 
-  updateUser: function(post) {
+  updateUser: function(user) {
     return new Promise((resolve, reject) => {
       var queryString = "UPDATE ?? (`first_name`,`last_name`,`email`,`password`,`dob`,`phone_number`,\
                       `device_type`,`device_token`,`latitude`,`longitude`,`is_verified`,`is_blocked`) \
-                      VALUES (? ? ? ? ? ? ? ? ? ? ? ?)";
+                      VALUES (? ? ? ? ? ? ? ? ? ? ? ?) WHERE id = ?";
       var table = ["user"];
       queryString = mysql.format(queryString, table);
-      var editedObject = [
-        post.first_name,
-        post.last_name,
-        post.email,
+      var editedUser = [
+        user.first_name,
+        user.last_name,
+        user.email,
         md5(post.password),
-        post.dob,
-        post.phone_number,
-        post.device_type,
-        post.device_token,
-        post.latitude,
-        post.longitude,
-        post.is_verified,
-        post.is_blocked
+        user.dob,
+        user.phone_number,
+        user.device_type,
+        user.device_token,
+        user.latitude,
+        user.longitude,
+        user.is_verified,
+        user.is_blocked,
+        user.id
       ];
-      connection.query(queryString, editedObject, (err, rows) => {
+      connection.query(queryString, editedUser, (err, rows) => {
         if(err) {
           return reject({
             "error": true,
