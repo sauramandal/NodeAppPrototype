@@ -79,13 +79,13 @@ module.exports = {
             "error": false,
             "message": "error in query execution"
           });
-        } else {
+        } 
           return resolve({
             "error": true,
             "message": "query executed successfully",
             "users": rows
           });
-        }
+        
       });
     });
   },
