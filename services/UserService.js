@@ -11,8 +11,7 @@ module.exports = {
             "message": "Error in executing sql"
           });
         }
-
-          //query executed successfully
+        //query executed successfully
         if(rows.length == 0) {
           //Insert new user
           var queryString = "INSERT INTO ?? (`first_name`, `last_name`)  values (?, ?) ";
@@ -35,30 +34,59 @@ module.exports = {
       });
     });
   },
-  
+
   userLoginCheckService: function(post) {
-    var queryString = "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?";
-    var tableValues = ["user", "password", md5(post.password), "email", post.email];
-    queryString = mysql.format(queryString, tableValues);
-    connection.query(queryString, (err, rows) => {
-        if(err) {
-            res.json({"Error": true, "Message": "Error executing Mysql query"});
-        } else {
-            if(rows.length == 1) {
-                //const user = {id: rows[0].userid};
-                //var userdata = rows[0].userid;
-                //user exist in db, with the email and password
-                var token = jwt.sign({rows}, config.secret, { expiresIn: 1440 });
-                console.log(token);
-                res.json({
-                    success: true,
-                    message: 'Token Generated',
-                    token: token
-                });
-            } else {
-                res.json({"Error": true, "Message": "Incorrect email/password"});
-            }
+    //return a new promise object
+    return new Promise((resolve, reject) => {
+      var queryString = "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?";
+      var tableValues = ["user", "password", md5(post.password), "email", post.email];
+      queryString = mysql.format(queryString, tableValues);
+      connection.query(queryString, (err, rows) => {
+        if(err){
+          return reject({
+            "error": true,
+            "message": "Error in executing sql"
+          });
         }
+
+        //query successfully executed
+        else {
+          if(rows.length == 1) {
+            var token = jwt.sign({rows[0].userid, rows[0].email}, config.secret, { expiresIn: 1440 });
+            return resolve({
+              "error": false,
+              "message": "Token generated for user"
+            });
+          } else {
+            return reject({
+              "error": true,
+              "message": "error in token generation"
+            });
+          }
+        }
+      });
+    });   
+  },
+
+  showAllUsers: function() {
+    return new Promise((resolve, reject) => {
+      var queryString = "SELECT * FROM ?? LIMIT 100"; //show 100 users
+      var values = ["user"];
+      queryString = mysql.format(queryString, values);
+      connection.query(queryString, (err, rows) => {
+        if(err) {
+          return reject({
+            "error": false,
+            "message": "error in query execution"
+          });
+        } else {
+          return resolve({
+            "error": true,
+            "message": "query executed successfully",
+            "users": rows
+          });
+        }
+      });
     });
   }
 }

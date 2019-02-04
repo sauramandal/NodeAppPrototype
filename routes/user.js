@@ -114,8 +114,7 @@ var userLoginCheck = (req, res) => {
 };
 
 var myProtectedRoute = (req, res) => {
-    jwt.verify(req.token, config.secret, function(err, data) {
-        console.log('Hi');
+    jwt.verify(req.token, config.secret, function(err, data) {        
         if(err) {
             console.log(err);
             res.sendStatus(403);

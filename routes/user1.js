@@ -4,7 +4,7 @@ const UserService = require('../services/UserService');
 
 router.get('/all', (req, res) => {
   // code for getting all users
-  console.log(req.body);
+  // console.log(req.body);
   UserService
   	.showAllUsers()
   	.then((res) => {
@@ -23,6 +23,10 @@ router.get('/all', (req, res) => {
 
 router.post('/new', (req, res) => {
   // code for new user
+});
+
+router.get('/:id/edit', (req, res) => {
+	//code to edit a user info
 });
 
 module.exports = router;
