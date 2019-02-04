@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const {connection} = require('./../database');
 const config = require('./../config');
 const {validationResult} = require('express-validator/check');
+const UserService = require('../services/UserService');
 
 var addNewUser = (req, res) => {
     var date = new Date();
@@ -23,32 +24,46 @@ var addNewUser = (req, res) => {
         block_status: req.body.block_status
     };
     console.log(post);
-    var queryString = "SELECT email FROM ?? WHERE ?? = ?";
-    var table = ["user", "email", post.email];
-    queryString = mysql.format(queryString, table);
-    connection.query(queryString, (err, rows) => {
-        if(err) {
-            res.json({
-                "Error": true,
-                "Message": "Error executing sql query"
+    UserService
+        .addUser(post)
+        .then(res => {
+            return res.json({
+                message: "user added"
             });
-        } else {
-            //query executed successfully
-            if(rows.length == 0) {
-                //Insert new user
-                var queryString = "INSERT INTO ?? SET ?";
-                var table = ["user"];
-                queryString = mysql.format(queryString, table);
-                connection.query(queryString, post, (err, rows) => {
-                    if(err) {
-                        res.json({"Error": true, "Message": "Error executing Mysql query"});
-                    } else {
-                        res.json({"Error": false, "Message": "Success"});
-                    }
-                });
-            }
-        }
-    });
+        })
+        .catch(err => {
+            //handle error or log error
+            return res.json({
+                message: "unable to add user"
+            });
+        });
+
+    // var queryString = "SELECT email FROM ?? WHERE ?? = ?";
+    // var table = ["user", "email", post.email];
+    // queryString = mysql.format(queryString, table);
+    // connection.query(queryString, (err, rows) => {
+    //     if(err) {
+    //         res.json({
+    //             "Error": true,
+    //             "Message": "Error executing sql query"
+    //         });
+    //     } else {
+    //         //query executed successfully
+    //         if(rows.length == 0) {
+    //             //Insert new user
+    //             var queryString = "INSERT INTO ?? SET ?";
+    //             var table = ["user"];
+    //             queryString = mysql.format(queryString, table);
+    //             connection.query(queryString, post, (err, rows) => {
+    //                 if(err) {
+    //                     res.json({"Error": true, "Message": "Error executing Mysql query"});
+    //                 } else {
+    //                     res.json({"Error": false, "Message": "Success"});
+    //                 }
+    //             });
+    //         }
+    //     }
+    // });
 };
 
 var userLoginCheck = (req, res) => {
@@ -56,34 +71,46 @@ var userLoginCheck = (req, res) => {
     var errors = validationResult(req);
     if(!errors.isEmpty()) {
         res.status(400).json(errors.array());
-    } 
+    }
     var post = {
         email: req.body.email,
         password: req.body.password
     };
-    var queryString = "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?";
-    var tableValues = ["user", "password", md5(post.password), "email", post.email];
-    queryString = mysql.format(queryString, tableValues);
-    connection.query(queryString, (err, rows) => {
-        if(err) {
-            res.json({"Error": true, "Message": "Error executing Mysql query"});
-        } else {
-            if(rows.length == 1) {
-                //const user = {id: rows[0].userid};
-                //var userdata = rows[0].userid;
-                //user exist in db, with the email and password
-                var token = jwt.sign({rows}, config.secret, { expiresIn: 1440 });
-                console.log(token);
-                res.json({
-                    success: true,
-                    message: 'Token Generated',
-                    token: token
-                });
-            } else {
-                res.json({"Error": true, "Message": "Incorrect email/password"});
-            }
-        }
-    });
+    UserService
+        .userLoginCheckService(post)
+        .then((res) => {
+            return res.json({
+                message: "user logged in"
+            });
+        })
+        .catch(err => {
+            return res.json({
+                message: "user unable to log in"
+            });
+        });
+    // var queryString = "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?";
+    // var tableValues = ["user", "password", md5(post.password), "email", post.email];
+    // queryString = mysql.format(queryString, tableValues);
+    // connection.query(queryString, (err, rows) => {
+    //     if(err) {
+    //         res.json({"Error": true, "Message": "Error executing Mysql query"});
+    //     } else {
+    //         if(rows.length == 1) {
+    //             //const user = {id: rows[0].userid};
+    //             //var userdata = rows[0].userid;
+    //             //user exist in db, with the email and password
+    //             var token = jwt.sign({rows}, config.secret, { expiresIn: 1440 });
+    //             console.log(token);
+    //             res.json({
+    //                 success: true,
+    //                 message: 'Token Generated',
+    //                 token: token
+    //             });
+    //         } else {
+    //             res.json({"Error": true, "Message": "Incorrect email/password"});
+    //         }
+    //     }
+    // });
 };
 
 var myProtectedRoute = (req, res) => {
