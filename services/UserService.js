@@ -88,5 +88,41 @@ module.exports = {
         }
       });
     });
+  },
+
+  updateUser: function(post) {
+    return new Promise((resolve, reject) => {
+      var queryString = "UPDATE ?? (`first_name`,`last_name`,`email`,`password`,`dob`,`phone_number`,\
+                      `device_type`,`device_token`,`latitude`,`longitude`,`is_verified`,`is_blocked`) \
+                      VALUES (? ? ? ? ? ? ? ? ? ? ? ?)";
+      var table = ["user"];
+      queryString = mysql.format(queryString, table);
+      var editedObject = [
+        post.first_name,
+        post.last_name,
+        post.email,
+        md5(post.password),
+        post.dob,
+        post.phone_number,
+        post.device_type,
+        post.device_token,
+        post.latitude,
+        post.longitude,
+        post.is_verified,
+        post.is_blocked
+      ];
+      connection.query(queryString, editedObject, (err, rows) => {
+        if(err) {
+          return reject({
+            "error": true,
+            "message": "error in sql query execution" 
+          });
+        } 
+        return resolve({
+          "error": false,
+          "message": "query executed successfully"
+        });
+      });
+    });
   }
 }
