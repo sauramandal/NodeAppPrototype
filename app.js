@@ -3,6 +3,7 @@ const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
+const fileUpload = require('express-fileupload');
 const jwt = require('jsonwebtoken');
 const config = require('./config');
 const { signUpValidation, loginValidation } =  require('./utility/validation');
@@ -19,7 +20,9 @@ app.set('views', __dirname + '/views'); //set express to look in this directory 
 app.set('view engine', 'ejs'); //configure template engine
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public'))); //configure express to use public folder
+app.use('/public', express.static(__dirname + '/public'));
+app.use(fileUpload());
+//Custom Routes for Products
 
 // //Custom Routes for User
 // app.post('/signup',signUpValidation, addNewUser);
@@ -28,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public'))); //configure express to 
 // app.get('/privateRoute', ensureToken, myProtectedRoute);
 
 app.use('/users', require('./routes/user1'));
+app.use('/products', require('./routes/product'));
 //   /users/all
 
 // app.use('/products', require('./routes/products'));

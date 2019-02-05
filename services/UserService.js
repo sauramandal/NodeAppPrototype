@@ -52,7 +52,7 @@ module.exports = {
         //query successfully executed
         else {
           if(rows.length == 1) {
-            var token = jwt.sign({rows[0].userid, rows[0].email}, config.secret, { expiresIn: 1440 });
+            var token = jwt.sign({rows}, config.secret, { expiresIn: 1440 });
             return resolve({
               "error": false,
               "message": "Token generated for user"
