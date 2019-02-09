@@ -19,7 +19,7 @@ module.exports = {
 						"message": "error in executing sql query"
 					});
 				}
-				return resolve({
+				resolve({
 					"error": false,
 					"message": "query executed successfully"
 				});

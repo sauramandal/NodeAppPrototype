@@ -1,11 +1,12 @@
 const mysql = require('mysql');
 const express = require('express');
+const bodyParser = require('body-parser');
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
 const {connection} = require('./../database');
 const config = require('./../config');
 const {validationResult} = require('express-validator/check');
-const UserService = require('../services/UserService');
+const UserService = require('./../services/UserService');
 
 var addNewUser = (req, res) => {
     var date = new Date();
@@ -13,11 +14,10 @@ var addNewUser = (req, res) => {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         email: req.body.email,
-        password: md5(req.body.password),
+        password: req.body.password,
         dob: req.body.dob,
         phone_number: req.body.phone_number,
         device_type: req.body.device_type,
-        device_token: req.body.device_token,
         latitude: req.body.latitude,
         longitude: req.body.longitude,
         is_verified: req.body.is_verified,
@@ -26,48 +26,23 @@ var addNewUser = (req, res) => {
     console.log(post);
     UserService
         .addUser(post)
-        .then(res => {
+        .then((res) => {
             return res.json({
-                message: "user added"
+                message: "user added",
+                result: res
             });
         })
-        .catch(err => {
+        .catch((err) => {
             //handle error or log error
             return res.json({
-                message: "unable to add user"
+                message: "unable to add user",
+                result: err
             });
         });
-
-    // var queryString = "SELECT email FROM ?? WHERE ?? = ?";
-    // var table = ["user", "email", post.email];
-    // queryString = mysql.format(queryString, table);
-    // connection.query(queryString, (err, rows) => {
-    //     if(err) {
-    //         res.json({
-    //             "Error": true,
-    //             "Message": "Error executing sql query"
-    //         });
-    //     } else {
-    //         //query executed successfully
-    //         if(rows.length == 0) {
-    //             //Insert new user
-    //             var queryString = "INSERT INTO ?? SET ?";
-    //             var table = ["user"];
-    //             queryString = mysql.format(queryString, table);
-    //             connection.query(queryString, post, (err, rows) => {
-    //                 if(err) {
-    //                     res.json({"Error": true, "Message": "Error executing Mysql query"});
-    //                 } else {
-    //                     res.json({"Error": false, "Message": "Success"});
-    //                 }
-    //             });
-    //         }
-    //     }
-    // });
 };
 
 var userLoginCheck = (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     var errors = validationResult(req);
     if(!errors.isEmpty()) {
         res.status(400).json(errors.array());
@@ -88,33 +63,10 @@ var userLoginCheck = (req, res) => {
                 message: "user unable to log in"
             });
         });
-    // var queryString = "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?";
-    // var tableValues = ["user", "password", md5(post.password), "email", post.email];
-    // queryString = mysql.format(queryString, tableValues);
-    // connection.query(queryString, (err, rows) => {
-    //     if(err) {
-    //         res.json({"Error": true, "Message": "Error executing Mysql query"});
-    //     } else {
-    //         if(rows.length == 1) {
-    //             //const user = {id: rows[0].userid};
-    //             //var userdata = rows[0].userid;
-    //             //user exist in db, with the email and password
-    //             var token = jwt.sign({rows}, config.secret, { expiresIn: 1440 });
-    //             console.log(token);
-    //             res.json({
-    //                 success: true,
-    //                 message: 'Token Generated',
-    //                 token: token
-    //             });
-    //         } else {
-    //             res.json({"Error": true, "Message": "Incorrect email/password"});
-    //         }
-    //     }
-    // });
 };
 
 var myProtectedRoute = (req, res) => {
-    jwt.verify(req.token, config.secret, function(err, data) {        
+    jwt.verify(req.token, config.secret, function(err, data) {
         if(err) {
             console.log(err);
             res.sendStatus(403);
@@ -137,4 +89,34 @@ var findAllUsers = (req, res) => {
     });
 };
 
-module.exports = {addNewUser, userLoginCheck, findAllUsers, myProtectedRoute};
+var editUser = (req, res) => {
+    var id = req.params.id;
+    var user = {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        password: req.body.password,
+        dob: req.body.dob,
+        phone_number: req.body.phone_number,
+        device_type: req.body.device_type,
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
+        is_verified: req.body.is_verified,
+        block_status: req.body.block_status
+    };
+    //console.log(user);
+
+    UserService
+        .updateUser(user, id)
+        .then((res) => {
+            return res.json({
+              message: "updated successfully"
+            });
+        })
+        .catch((err) => {
+            //render the edit page
+            return res.status(500).send(err);
+        });
+};
+
+module.exports = {addNewUser, userLoginCheck, findAllUsers, myProtectedRoute, editUser};

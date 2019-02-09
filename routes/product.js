@@ -27,8 +27,8 @@ router.post('/addProduct', (req, res) => {
 		created_at: date
 	};
 
-	//check filetype before uploading it on server
-	if(uploadedFile.mimetype === 'image/png' || uploadedFile.mimetype === 'image/jpeg' || 
+	//check filetype before uploading it on server
+	if(uploadedFile.mimetype === 'image/png' || uploadedFile.mimetype === 'image/jpeg' ||
 		uploadedFile.mimetype === 'image/gif') {
 
 		//upload file to /public/assets/img/${imageName}

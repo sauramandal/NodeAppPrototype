@@ -1,8 +1,14 @@
+const mysql = require('mysql');
+const {connection} = require('./../database');
+const md5 = require('md5');
+const jwt = require('jsonwebtoken');
+const config = require('./../config');
+
 module.exports = {
-  addUser: function (post) {
+  addUser: function(post) {
     return new Promise((resolve, reject) => {
       var queryString = "SELECT email FROM ?? WHERE ?? = ?";
-      var table = ["user", "email", post.email];
+      var table = ["USER", "email", post.email];
       queryString = mysql.format(queryString, table);
       connection.query(queryString, (err, rows) => {
         if (err)  {
@@ -11,25 +17,45 @@ module.exports = {
             "message": "Error in executing sql"
           });
         }
-        //query executed successfully
-        if(rows.length == 0) {
-          //Insert new user
-          var queryString = "INSERT INTO ?? (`first_name`, `last_name`)  values (?, ?) ";
-          var table = ["user"];
-          queryString = mysql.format(queryString, table);
-          connection.query(queryString, [ post.first_name, post.last_name ], (err, rows) => {
-              if(err) {
-                return reject({
-                  "error": true,
-                  "message": "Error in executing sql"
-                });
-              }
+        else {
+          //query executed successfully
+          if(rows.length == 0) {
+            //Create an user object
+            var userObject = [
+              post.first_name,
+              post.last_name,
+              post.dob,
+              post.device_type,
+              post.latitude,
+              post.longitude,
+              post.email,
+              md5(post.password),
+              post.phone_number,
+              post.is_verified,
+              post.block_status
+            ];
+            //Insert new user
+            var queryString = "INSERT INTO ?? (`first_name`, `last_name`, `dob`, `device_type`, `latitude`,`longitude`, `email`, `password`, \
+                               `phone_number`,`is_verified`,`block_status`)  \
+                               values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+            var table = ["USER"];
+            queryString = mysql.format(queryString, table);
+            connection.query(queryString, userObject, (err, rows) => {
+                console.log("Hi");
+                if(err) {
+                  return reject({
+                    "error": true,
+                    "message": "Error in executing sql"
+                  });
+                }
 
-              return resolve({
-                "Error": false,
-                "Message": "Success"
-              });
-          });
+                resolve({
+                  "Error": false,
+                  "Message": "Success"
+                });
+
+            });
+          }
         }
       });
     });
@@ -39,7 +65,7 @@ module.exports = {
     //return a new promise object
     return new Promise((resolve, reject) => {
       var queryString = "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?";
-      var tableValues = ["user", "password", md5(post.password), "email", post.email];
+      var tableValues = ["USER", "password", md5(post.password), "email", post.email];
       queryString = mysql.format(queryString, tableValues);
       connection.query(queryString, (err, rows) => {
         if(err){
@@ -65,13 +91,13 @@ module.exports = {
           }
         }
       });
-    });   
+    });
   },
 
   showAllUsers: function() {
     return new Promise((resolve, reject) => {
       var queryString = "SELECT * FROM ?? LIMIT 100"; //show 100 users
-      var values = ["user"];
+      var values = ["USER"];
       queryString = mysql.format(queryString, values);
       connection.query(queryString, (err, rows) => {
         if(err) {
@@ -79,47 +105,53 @@ module.exports = {
             "error": false,
             "message": "error in query execution"
           });
-        } 
+        }
           return resolve({
             "error": true,
             "message": "query executed successfully",
             "users": rows
           });
-        
+
       });
     });
   },
 
-  updateUser: function(user) {
+  updateUser: function(user, id) {
     return new Promise((resolve, reject) => {
-      var queryString = "UPDATE ?? (`first_name`,`last_name`,`email`,`password`,`dob`,`phone_number`,\
-                      `device_type`,`device_token`,`latitude`,`longitude`,`is_verified`,`is_blocked`) \
-                      VALUES (? ? ? ? ? ? ? ? ? ? ? ?) WHERE id = ?";
-      var table = ["user"];
-      queryString = mysql.format(queryString, table);
+      //console.log(user);
       var editedUser = [
         user.first_name,
         user.last_name,
         user.email,
-        md5(post.password),
+        md5(user.password),
         user.dob,
         user.phone_number,
         user.device_type,
-        user.device_token,
         user.latitude,
         user.longitude,
         user.is_verified,
-        user.is_blocked,
-        user.id
+        user.block_status,
+        id
       ];
+      //console.log(editedUser);
+      var queryString = "UPDATE ?? SET `first_name` = ?,`last_name` = ?, `email` = ?, `password` = ?,\
+                        `dob` = ?, `phone_number` = ?,`device_type` = ?,`latitude` = ?,\
+                        `longitude` = ?, `is_verified` = ?, `block_status` = ? WHERE user_id = ?";
+          
+      var table = ["USER"];
+      queryString = mysql.format(queryString, table);
+      console.log(queryString);
+      
+      console.log("Hi");
       connection.query(queryString, editedUser, (err, rows) => {
         if(err) {
+          console.log("rejected");
           return reject({
             "error": true,
-            "message": "error in sql query execution" 
+            "message": "error in sql query execution"
           });
-        } 
-        return resolve({
+        }
+        resolve({
           "error": false,
           "message": "query executed successfully"
         });

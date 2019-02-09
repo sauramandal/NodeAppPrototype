@@ -10,7 +10,7 @@ const { signUpValidation, loginValidation } =  require('./utility/validation');
 
 const {ensureToken} = require('./middleware/ensureToken');
 const {check, validationResult} = require('express-validator/check');
-const {addNewUser, userLoginCheck, findAllUsers, myProtectedRoute} = require('./routes/user');
+const {addNewUser, userLoginCheck, findAllUsers, myProtectedRoute, editUser} = require('./routes/user');
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -24,9 +24,10 @@ app.use('/public', express.static(__dirname + '/public'));
 app.use(fileUpload());
 //Custom Routes for Products
 
-// //Custom Routes for User
-// app.post('/signup',signUpValidation, addNewUser);
-// app.post('/login', loginValidation, userLoginCheck);
+// Custom Routes for User
+app.post('/signup',signUpValidation, addNewUser);
+app.post('/login', loginValidation, userLoginCheck);
+app.post('/:id/editUser',signUpValidation, editUser);
 // app.get('/users', findAllUsers);
 // app.get('/privateRoute', ensureToken, myProtectedRoute);
 
@@ -39,5 +40,3 @@ app.use('/products', require('./routes/product'));
 app.listen(port, function() {
     console.log(`Express server started on port: ${port}`);
 });
-
-
