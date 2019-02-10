@@ -12,12 +12,17 @@ router.get('/new', (req, res) => {
     if(err) {
       res.status(500).send(err);
     }
-    console.log(rows);
+    //console.log(rows);
     res.render('company/AddCompany.ejs', {
       title: 'Add new company',
       companies: rows
     });
   }); 
+});
+
+router.post('/new', (req, res) => {
+  console.log(req.body);
+  res.json(req.body);
 });
 
 module.exports = router;
