@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-12">
             <input type="hidden" name="errorMessage" id="ErrorMessage" value=""/>
-            <form data-toggle="validator" novalidate="true" id="AddCompany" name="addCompany">
+            <form data-toggle="validator" novalidate="true" id="AddCompany" name="addCompany" method="POST" action="/companies/new">
                 <div class="form-body">
                     <input id="HidText1" name="hidText1" type="hidden" value="" />
                     <div class="row">
@@ -60,13 +60,14 @@
                         <div class="form-group col-md-6">
                             <label for="Country" class="control-label">Country</label>
                             <select class="form-control" id="Country" name="country">
-                                <% for(var i=0; i<companies.length; i++) { %>
+                                <!-- <% for(var i=0; i<companies.length; i++) { %>
                                     <% if(companies[i]['nicename'] === "United States") { %>
                                         <option value="<%= companies[i]['nicename'] %>" selected><%= companies[i]['nicename'] %></option>
                                     <% } else { %>
                                         <option value="<%= companies[i]['nicename'] %>"><%= companies[i]['nicename'] %></option>
                                     <% } %>
-                                <% } %>
+                                <% } %> -->
+                                <option value="India">India</option>
                             </select>
                             <div class="help-block with-errors"></div>
                         </div>
@@ -119,7 +120,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12">
-                                <input type="button" name="register" id="Register" class="btn btn-info" value="Register" onclick="SubmitForm('register');" />
+                                <input type="submit" name="register" id="Register" class="btn btn-info" value="Register" />
                                 <input id="Clear" class="btn btn-default" type="reset"
                                 name="clear" value="Reset" onclick="ResetForm();" />
                             </div>

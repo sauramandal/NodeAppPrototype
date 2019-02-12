@@ -5,19 +5,30 @@ const md5 = require('md5');
 const config = require('./../config');
 
 router.get('/new', (req, res) => {
-  var queryString = "SELECT nicename FROM ??";          
-  var table = ["TB_COUNTRY"];
-  queryString = mysql.format(queryString, table);
-  connection.query(queryString, (err, rows) => {
-    if(err) {
-      res.status(500).send(err);
-    }
-    //console.log(rows);
-    res.render('company/AddCompany.ejs', {
-      title: 'Add new company',
-      companies: rows
-    });
-  }); 
+  // var queryString = "SELECT nicename FROM ??";          
+  // var table = ["TB_COUNTRY"];
+  // queryString = mysql.format(queryString, table);
+  // connection.query(queryString, (err, rows) => {
+  //   if(err) {
+  //     res.status(500).send(err);
+  //   }
+  //   //console.log(rows);
+  //   res.render('company/AddCompany.ejs', {
+  //     title: 'Add new company',
+  //     companies: rows
+  //   });
+  // });
+  
+  //test
+  var testObj = {
+    id: 1,
+    nicename: "United States"
+  };
+  console.log(testObj);
+  res.render('company/AddCompany.ejs', {
+    title: 'Add a company',
+    companies: testObj
+  });
 });
 
 router.post('/new', (req, res) => {
