@@ -35,7 +35,6 @@ app.use('/users', require('./routes/user1'));
 app.use('/products', require('./routes/product'));
 //   /users/all
 
-// app.use('/products', require('./routes/products'));
 
 //Custom Routes for Companies
 app.use('/companies', require('./routes/company'));

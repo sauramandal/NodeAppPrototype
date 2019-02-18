@@ -36,30 +36,52 @@
 // };
 
 $(document).ready(function() {
-  var form = $('#AddCompany');
-  form.on('submit', handleForm);
-  function handleForm(e) {
-    e.preventDefault();
-    const options = {
-      method: 'POST',
-      url: '/companies/new',
-      data: form.serialize()
-    };
-    $.ajax(options).done(response => {
-      console.log(response);
-    });
-  }
+  console.log('dom loaded');
+  $("#AddCompany").validator().on('submit', function(e) {
+    if(e.isDefaultPrevented()) {
+      //handle invalid response
+      console.log('error');
+    } else {
+      console.log('success');
+      e.preventDefault();
+      var form = $('#AddCompany');
+      //submit form via ajax request
+      $.ajax({
+        method: 'POST',
+        url: '/companies/new',
+        data: form.serialize(),
+        success: callBack
+      });
+    }
+  }); 
 });
 
+var callBack = function(res) {
+  //console.log(res);
+  var companyDetails = JSON.parse(res);
+  console.log(companyDetails);
+  var form = $('#AddCompany');
+  form[0].reset();
+  // form.validator('destroy');
+  // form.validator();
+  var messageText = "";
+  notification("Add Company Profile", messageText, "success", onRegisterClick);
+}
 
-// $(document).ready(function(){
-	
-// 	console.log('ready')
-//   $('#submitBtn').click(function(event) {
-//   	event.preventDefault();
-// 		console.log('form submitted')  
-//     var username = $('#txtUserName').val();
-    
-//     console.log('value :' + username)
-//   })
-// });
+var notification = function(title, text, type, callback, value) {
+  switch(type.toLowerCase())
+  {
+    case "success" : 
+      swal({
+        content: true,
+        title: title,
+        text: text,
+        icon: "success"
+      });
+      break;
+  }
+};
+
+var onRegisterClick = function() {
+  $('#AddCompany')[0].reset();
+};
