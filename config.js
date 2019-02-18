@@ -1,5 +1,5 @@
 module.exports = {
     secret: 'sauram',
-    dbPassword: '#ScecbflU2',
+    dbPassword: '',
     databaseName: 'shopping_schema'
 };

@@ -83,5 +83,9 @@ var notification = function(title, text, type, callback, value) {
 };
 
 var onRegisterClick = function() {
+  resetForm();
+};
+
+var resetForm = function() {
   $('#AddCompany')[0].reset();
 };

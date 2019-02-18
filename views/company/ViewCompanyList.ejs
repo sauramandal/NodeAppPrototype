@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/public/assets/plugins/jquery.min.js"></script>
+    <script type="text/javascript" src="/public/assets/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/public/assets/bootstrap/css/bootstrap.min.css">
+    <script type="text/javascript" src="/public/assets/plugins/validator.js"></script>
+    <script type="text/javascript" src="/public/assets/plugins/dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/html" href="/public/assets/dataTables.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-12">
+            <form id="Add_Company" name="add_company" method="post" action="">
+                <input type="hidden" name="companyId" id="CompanyId"/>
+                <table id="CompanyList" class="table table-striped" width="100%">
+                    <tr>
+                        <th>ID</th>
+                        <th>Company Name</th>
+                        <th>City</th>
+                        <th>Phone</th>
+                        <th>Country</th>
+                        <th class="edit">Edit</th>
+                        <th class="delete">Delete</th>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="/public/assets/js/ModifyCompanyDetails.js"></script>
+</html>

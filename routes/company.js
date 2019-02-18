@@ -79,4 +79,38 @@ router.post('/new', (req, res) => {
   
 });
 
+router.get('/getCompaniesList', (req, res) => {
+  res.render('company/ViewCompanyList', {
+    title: "View Company List"
+  });
+});
+
+router.post('/getCompanyList', (req, res) => {
+  //console.log(req);
+  let orderingColumnNo = req.body.order[0].column;
+  let orderingColumn = req.body.columns[orderingColumnNo].name;
+  let orderingDirection = req.body.order[0].dir;
+  let filter = req.body.search.value;
+  let length = req.body.length;
+  let start = req.body.start;
+  let draw = req.body.draw;
+  //console.log(length); console.log(start); console.log(draw);
+  var gridSortColumn = orderingColumn;
+  var gridSortDirection = orderingDirection;
+  var filter = filter;
+  // var queryString = "SELECT id AS REG_ID, \
+  //                     company_name AS COMPANY_NAME, \
+  //                     city AS CITY, \
+  //                     phone AS PHONE, \
+  //                     country AS COUNTRY \
+  //                   FROM ?? \
+  //                   WHERE ? LIKE CASE \
+  //                                 WHEN ? IS NULL \
+  //                                 THEN company_name \
+  //                                 ELSE ? \
+  //                                END \
+  //                                + '%' \
+  //                   ORDER BY";
+});
+
 module.exports = router;
