@@ -86,31 +86,55 @@ router.get('/getCompaniesList', (req, res) => {
 });
 
 router.post('/getCompanyList', (req, res) => {
-  //console.log(req);
-  let orderingColumnNo = req.body.order[0].column;
-  let orderingColumn = req.body.columns[orderingColumnNo].name;
-  let orderingDirection = req.body.order[0].dir;
-  let filter = req.body.search.value;
-  let length = req.body.length;
-  let start = req.body.start;
-  let draw = req.body.draw;
-  //console.log(length); console.log(start); console.log(draw);
+  var orderingColumnNo = req.body.order[0].column;
+  var orderingColumn = req.body.columns[orderingColumnNo].name;
+  var orderingDirection = req.body.order[0].dir;
+  var filter = req.body.search.value;
+  var length = req.body.length;
+  var start = req.body.start;
+  var draw = req.body.draw;
+  
   var gridSortColumn = orderingColumn;
   var gridSortDirection = orderingDirection;
-  var filter = filter;
-  // var queryString = "SELECT id AS REG_ID, \
-  //                     company_name AS COMPANY_NAME, \
-  //                     city AS CITY, \
-  //                     phone AS PHONE, \
-  //                     country AS COUNTRY \
-  //                   FROM ?? \
-  //                   WHERE ? LIKE CASE \
-  //                                 WHEN ? IS NULL \
-  //                                 THEN company_name \
-  //                                 ELSE ? \
-  //                                END \
-  //                                + '%' \
-  //                   ORDER BY";
+  var filterValue = filter;
+  //res.send(JSON.stringify({"name" : "xyz"}, null, 3));
+  var queryString = "SELECT id AS A_REG_ID, \
+                      company_name AS B_COMPANY_NAME, \
+                      city AS C_CITY, \
+                      phone AS D_PHONE, \
+                      country AS E_COUNTRY \
+                    FROM ??";
+  var tableValues = ["TB_COMPANY"];
+  console.log('Hey there');
+  queryString = mysql.format(queryString, tableValues);
+  connection.query(queryString, (err, rows) => {
+    if(err)
+      res.send(err);
+    else {
+      //console.log(rows);
+      //convert to dt format
+      var dataArray = new Array;
+      for(let i=0;i<rows.length;i++) 
+      {
+        dataArray[i] = new Array;
+        let regId = rows[i].A_REG_ID;
+        let companyName = rows[i].B_COMPANY_NAME;
+        let city = rows[i].C_CITY;
+        let phone = rows[i].D_PHONE;
+        let country = rows[i].E_COUNTRY;
+        dataArray[i].push(regId, companyName, city, phone, country);
+      }
+      var obj = {};  
+      obj["recordsTotal"] = rows.length;
+      obj["recordsFiltered"] = rows.length;
+      obj["draw"] = parseInt(draw);
+      obj["data"] = dataArray;
+      //var results = JSON.stringify(rows);
+     
+      //console.log(obj); 
+      res.send(JSON.stringify(obj));
+    }
+  });
 });
 
 module.exports = router;

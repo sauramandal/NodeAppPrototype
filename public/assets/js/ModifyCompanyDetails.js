@@ -16,8 +16,8 @@ var createDatatablesGrid = function() {
         columns += ',{ "name" : "DELETE", "searchable" : false, "orderable": false, ';
         columns += '"render": function(data, type, full, meta) { return deleteColumnContent(); }}]';
     }
-    var columndef = eval(columns);
-    var companyTable = $('#CompanyList').DataTable({
+    var columndef = eval(columns); //console.log(columndef);
+    companyTable = $('#CompanyList').DataTable({
         "destroy" : true,
         "dom" : "lftipr",
         "language" : {
@@ -32,7 +32,7 @@ var createDatatablesGrid = function() {
             "type" : "POST"
         }
     });
-    //Adding functionality after DT initialisations
+    //Adding functionality after DT initialization
     $('#CompanyList').on('init.dt', function() {
         console.log('Hello');
     });
