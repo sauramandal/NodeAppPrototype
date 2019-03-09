@@ -15,22 +15,39 @@
 <body>
     <div class="row">
         <div class="col-md-12">
+            <!-- Modal HTML -->
+            <div id="GeneralModal" class="modal fade">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title"></h4>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <form id="Add_Company" name="add_company" method="post" action="">
                 <input type="hidden" name="companyId" id="CompanyId"/>
+                <input type="hidden" id="HiddenId" name="hiddenId" value="" />
                 <table id="CompanyList" class="table table-striped" width="100%">
-                    <tr>
-                        <th>ID</th>
-                        <th>Company Name</th>
-                        <th>City</th>
-                        <th>Phone</th>
-                        <th>Country</th>
-                        <th class="edit">Edit</th>
-                        <th class="delete">Delete</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                                <th>ID</th>
+                                <th>Company Name</th>
+                                <th>City</th>
+                                <th>Phone</th>
+                                <th>Country</th>
+                                <th class="edit">Edit</th>
+                                <th class="delete">Delete</th>
+                        </tr>
+                    </thead>                  
                 </table>
             </form>
         </div>
     </div>
+    
 </body>
 <script type="text/javascript" src="/public/assets/js/ModifyCompanyDetails.js"></script>
 </html>

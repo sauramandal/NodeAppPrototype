@@ -11,6 +11,7 @@ const { signUpValidation, loginValidation } =  require('./utility/validation');
 const {ensureToken} = require('./middleware/ensureToken');
 const {check, validationResult} = require('express-validator/check');
 const {addNewUser, userLoginCheck, findAllUsers, myProtectedRoute, editUser} = require('./routes/user');
+const {editCompanyDetails} = require('./routes/company');
 
 var app = express();
 var port = process.env.PORT || 3000;

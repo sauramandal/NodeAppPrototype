@@ -105,7 +105,6 @@ router.post('/getCompanyList', (req, res) => {
                       country AS E_COUNTRY \
                     FROM ??";
   var tableValues = ["TB_COMPANY"];
-  console.log('Hey there');
   queryString = mysql.format(queryString, tableValues);
   connection.query(queryString, (err, rows) => {
     if(err)
@@ -129,12 +128,36 @@ router.post('/getCompanyList', (req, res) => {
       obj["recordsFiltered"] = rows.length;
       obj["draw"] = parseInt(draw);
       obj["data"] = dataArray;
-      //var results = JSON.stringify(rows);
-     
-      //console.log(obj); 
+    
       res.send(JSON.stringify(obj));
     }
   });
+});
+
+router.get('/editCompanyDetails', (req, res) => {
+  //console.log(req.query.mode);
+  let regId = req.query.regId;
+  var queryString = "SELECT id, company_name, city, phone, country FROM ?? WHERE id = ?";
+  var tableValues = ["TB_COMPANY"];
+  queryString = mysql.format(queryString, regId, tableValues);
+  console.log(queryString);
+  connection.query(queryString, (err, rows) => {
+    if(err)
+      res.send(err);
+    console.log(rows);
+    if(req.query.mode === 'View') {
+      res.render('company/ViewCompanyDetails.ejs', {
+        title: 'View company details',
+        companies: rows
+      });
+    } else {
+      res.render('company/EditCompanyDetails.ejs', {
+        title: 'Add new company',
+        companies: rows
+      });
+    }
+  });
+  // res.send({"name": "Saura"});
 });
 
 module.exports = router;
