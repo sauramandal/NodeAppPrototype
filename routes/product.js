@@ -1,12 +1,85 @@
 const router = require('express').Router();
 const ProductService = require('../services/ProductService');
-const connection = require('../database');
+const mysql = require('mysql');
+const {connection} = require('./../database');
+const md5 = require('md5');
+const config = require('./../config');
 
-router.get('/addProduct', (req, res) => {
-	res.render('product/add-product.ejs', {
-		title: 'Add a new product',
-		message: ''
-	});
+
+router.get('/addProduct', async (req, res) => {
+	try {
+		//steps to happen in parallel using Promise.all
+		let [ companies, categories ] = await Promise.all([
+			ProductService.getCompanies(),
+			ProductService.getCategories()
+		]);
+		console.log(companies); console.log(categories);
+		// let categories = await ;
+		return res.render('product/add-product.ejs', {
+			title: 'Add a product',
+			companies,
+			categories
+		});
+	} catch(err) {
+		// log error to file and return
+		return res.view('error', {
+			message: 'Ooops'
+		})
+	}
+	
+	//method 2
+	/*const promiseArr = [
+		ProductService.getCompanies(), 
+		ProductService.getCategories()
+	];
+
+	Promise
+	.all(promiseArr)
+	.then(result => {
+		let companies = result[0];
+		let categories = result[1];
+		return res.view();
+	})
+	.catch(err => {
+
+	}); */
+
+	// ProductService
+	// 	.getCompanies()
+	// 	.then((result) => {
+	// 		companyList = result;
+	// 		receiveList(companyList);	
+	// 		//var companyList = result;
+	// 		//console.log(res.companyList); 
+	// 		//console.log(result);
+	// 		/*res.render('product/add-product.ejs', {
+	// 			title: 'Add a product',
+	// 			companies: result
+	// 		});*/
+	// 	})
+	// 	.catch((err) => {
+	// 		console.log(err);
+	// 		res.status(500).send(err);
+	// 	});
+	// 	console.log(companyList); 
+	/*ProductService
+		.getCategories()
+		.then((result) => {
+			categoryList = result;
+			console.log(categoryList);
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status(500).send(err);
+		});*/
+	
+	//res.render('product/add-product.ejs', {
+		//title: 'Add a product'
+		//companies: res.companyList
+		//categories: categoryList
+	//});
+	
+	
 });
 
 router.post('/addProduct', (req, res) => {
@@ -24,7 +97,8 @@ router.post('/addProduct', (req, res) => {
 		product_description: req.body.product_description,
 		product_price: req.body.product_price,
 		product_image: imageName,
-		created_at: date
+		created_at: date,
+		category_id: req.body.category_id
 	};
 
 	//check filetype before uploading it on server

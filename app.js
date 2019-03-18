@@ -11,6 +11,7 @@ const { signUpValidation, loginValidation } =  require('./utility/validation');
 const {ensureToken} = require('./middleware/ensureToken');
 const {check, validationResult} = require('express-validator/check');
 const {addNewUser, userLoginCheck, findAllUsers, myProtectedRoute, editUser} = require('./routes/user');
+const {dashboard} = require('./routes/index');
 const {editCompanyDetails} = require('./routes/company');
 
 var app = express();
@@ -23,9 +24,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/public', express.static(__dirname + '/public'));
 app.use(fileUpload());
+
 //Custom Routes for Products
 
 // Custom Routes for User
+app.get('/index', dashboard);
 app.post('/signup',signUpValidation, addNewUser);
 app.post('/login', loginValidation, userLoginCheck);
 app.post('/:id/editUser',signUpValidation, editUser);
