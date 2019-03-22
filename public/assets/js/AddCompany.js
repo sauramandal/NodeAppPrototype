@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
   console.log('dom loaded');
   $("#AddCompany").validator().on('submit', function(e) {

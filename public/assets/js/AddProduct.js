@@ -1,67 +1,55 @@
-var addProduct = {};
-var customOnLoad = $(document).ready(function() {
-  console.log('hi');
-  addProduct.submitForm();
+$(document).ready(function() {
+  // $("#AddProduct").validator().on('submit', function(e) {
+  //   if(e.isDefaultPrevented()) { console.log('error'); }
+  //   else {
+  //     console.log('success');
+  //     e.preventDefault();
+  //     var form = $('#AddProduct');
+  //     console.log(form.serialize());
+  //     $.ajax({
+  //       method: 'POST',
+  //       url: '/products/addProduct',
+  //       data: form.serialize(),
+  //       success: successHandler
+  //     });
+  //   }
+  // });
+
+  $('#Register').on('click', function(event) {
+    event.preventDefault();
+    // validate the form here
+    // if everything goes well then submit form else continue
+  debugger
+  });
 });
 
-addProduct.submitForm = function() {
-  $("#addProductButton").on('click', function() {
-    $("#addProductForm").bootstrapValidator({
-      //Use feedback icons
-      feedbackIcons: {
-        valid: 'glyphicon glyphicon-ok',
-        invalid: 'glyphicon glyphicon-remove',
-        validating: 'glyphicon glyphicon-refresh'
-      },
-      fields: {
-        product_name: {
-          message: 'Product Name is not valid',
-          validators: {
-            notEmpty: {
-              message: 'Product name is requried'
-            },
-            stringLength: {
-              min: 6,
-              max: 30,
-              message: 'Product name must be more than 6 and less than 30 characters long'
-            },
-            regexp: {
-              regexp: /^[ a-zA-Z0-9]+$/,
-              message: 'Product name can only consists of alphabets and numbers'
-            }
-          }
-        },
-        product_description: {
-          validators: {
-            notEmpty: {
-              message: 'Product description is requried'
-            },
-            stringLength: {
-              min: 20,
-              max: 100,
-              message: 'Product description must be more between 20 and 100 chars'
-            }
-          }
-        },
-        product_price: {
-          validators: {
-            notEmpty: {
-              message: 'Product price is required'
-            }
-          }
-        },
-        product_image: {
-          validators: {
-            notEmpty: {
-              message: 'Product image is required'
-            }
-          }
-        }
-      }
-    });
-    /*$("#addProductForm").submit(function(event) {
-      event.preventDefault();
-      console.log('Submit form via ajax request');
-    });*/
-  });
+var successHandler = function(response) {
+  console.log(response);
+  var productDetails = JSON.parse(response); console.log(productDetails);
+  var form = $('#AddCompany');
+  form[0].reset();
+  var messageText = "Product has been successfully added";
+  showNotification("Added Product", messageText, "success", onRegisterClick);
+};
+
+var showNotification = function(title, text, type, callback, value) {
+  switch(type.toLowerCase())
+  {
+    case "success" :
+      swal({
+        content: true,
+        title: title,
+        text: text,
+        icon: "success"
+      });
+    break;
+  }
+};
+
+var onRegisterClick = function() {
+  resetForm();
+};
+
+var resetForm = function() {
+  $('#AddCompany')[0].reset();
 };

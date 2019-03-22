@@ -4,16 +4,16 @@ const mysql = require('mysql');
 const {connection} = require('./../database');
 const md5 = require('md5');
 const config = require('./../config');
-
+const fileUpload = require('express-fileupload');
 
 router.get('/addProduct', async (req, res) => {
 	try {
-		//steps to happen in parallel using Promise.all
+		//steps to happen concurrently asynchronous using Promise.all
 		let [ companies, categories ] = await Promise.all([
 			ProductService.getCompanies(),
 			ProductService.getCategories()
 		]);
-		console.log(companies); console.log(categories);
+		//console.log(companies); console.log(categories);
 		// let categories = await ;
 		return res.render('product/add-product.ejs', {
 			title: 'Add a product',
@@ -21,14 +21,15 @@ router.get('/addProduct', async (req, res) => {
 			categories
 		});
 	} catch(err) {
-		// log error to file and return
-		return res.view('error', {
+		// log error to file and return a 404 page not found
+		return res.render('error', {
 			message: 'Ooops'
-		})
+		});
 	}
 	
 	//method 2
-	/*const promiseArr = [
+	/*
+	const promiseArr = [
 		ProductService.getCompanies(), 
 		ProductService.getCategories()
 	];
@@ -38,47 +39,19 @@ router.get('/addProduct', async (req, res) => {
 	.then(result => {
 		let companies = result[0];
 		let categories = result[1];
-		return res.view();
+		console.log(companies); console.log(categories);
+		return res.render('product/add-product.ejs', {
+			title: 'Add a product',
+			companies,
+			categories
+		});
+		//return res.view();
 	})
 	.catch(err => {
-
-	}); */
-
-	// ProductService
-	// 	.getCompanies()
-	// 	.then((result) => {
-	// 		companyList = result;
-	// 		receiveList(companyList);	
-	// 		//var companyList = result;
-	// 		//console.log(res.companyList); 
-	// 		//console.log(result);
-	// 		/*res.render('product/add-product.ejs', {
-	// 			title: 'Add a product',
-	// 			companies: result
-	// 		});*/
-	// 	})
-	// 	.catch((err) => {
-	// 		console.log(err);
-	// 		res.status(500).send(err);
-	// 	});
-	// 	console.log(companyList); 
-	/*ProductService
-		.getCategories()
-		.then((result) => {
-			categoryList = result;
-			console.log(categoryList);
-		})
-		.catch((err) => {
-			console.log(err);
-			res.status(500).send(err);
-		});*/
-	
-	//res.render('product/add-product.ejs', {
-		//title: 'Add a product'
-		//companies: res.companyList
-		//categories: categoryList
-	//});
-	
+		return res.render('error_page', {
+			message: ''
+		});
+	}); */	
 	
 });
 
@@ -91,16 +64,17 @@ router.post('/addProduct', (req, res) => {
 	var image_name = uploadedFile.name;
 	var fileExtension = uploadedFile.mimetype.split('/')[1];
 	imageName = req.body.product_name + '.' + fileExtension;
-
+	console.log(req.body);
 	var product = {
 		product_name: req.body.product_name,
 		product_description: req.body.product_description,
 		product_price: req.body.product_price,
 		product_image: imageName,
 		created_at: date,
-		category_id: req.body.category_id
+		company_id: req.body.company,
+		category_id: req.body.category
 	};
-
+	console.log(product);
 	//check filetype before uploading it on server
 	if(uploadedFile.mimetype === 'image/png' || uploadedFile.mimetype === 'image/jpeg' ||
 		uploadedFile.mimetype === 'image/gif') {
@@ -110,14 +84,15 @@ router.post('/addProduct', (req, res) => {
 			if(err) {
 				return res.status(500).send(err);
 			}
-			ProductService
+			res.status(200).send({"message": "OK"});
+			/*ProductService
 				.addProduct(product)
 				.then((res) => {
 					return res.redirect('/');
 				})
 				.catch((err) => {
 					return res.status(500).send(err);
-				});
+				}); */
 		});
 	}
 	else {

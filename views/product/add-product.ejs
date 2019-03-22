@@ -4,16 +4,14 @@
   <title><%= title %></title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- jQuery and Bootstrap JS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  <!-- Include FontAwesome CSS if you want to use feedback icons provided by FontAwesome -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
-  <!-- BootstrapValidator CSS -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css"/>
-  <!-- BootstrapValidator JS -->
-  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js"></script>
+  <script src="/public/assets/plugins/jquery.min.js"></script>
+    <script type="text/javascript" src="/public/assets/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/public/assets/bootstrap/css/bootstrap.min.css">
+    <script type="text/javascript" src="/public/assets/plugins/validator.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 </head>
 <body>
 
@@ -21,71 +19,93 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <div class="page-header">
-        <h2><%= title %></h2>
+        
       </div>
 
-      <form class="form-horizontal add-product-form" id="addProductForm" action="" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="Country" class="col-sm-3 control-label">Company</label>
-            <div class="col-sm-5">
-                <select class="form-control" id="Company" name="company">
-                    <% for(var i=0; i<companies.length; i++) { %>
-                        <% if(companies[i]['company_name'] === "something") { %>
-                            <option value="<%= companies[i]['company_name'] %>" selected><%= companies[i]['company_name'] %></option>
-                        <% } else { %>
-                            <option value="<%= companies[i]['company_name'] %>"><%= companies[i]['company_name'] %></option>
+      <div class="row justify-content-left">
+        <div class="col-md-6">
+          <div class="card">
+            <header class="card-header">
+              <h4 class="card-title mt-2">Add Product</h4>
+            </header>
+            <article class="card-body">
+              <form data-toggle="validator" novalidate="true" id="AddProduct" name="addProduct" method="POST" action="/products/addProduct">
+                <div class="form-body">
+                  <div class="row">
+                    <div class="form-group col-md-12">
+                      <label for="Companies" class="control-label">Select Company</label>
+                      <select class="form-control" id="Company" name="company">
+                        <% for(var i=0; i<companies.length; i++) { %>
+                            <% if(companies[i]['company_name'] === "something") { %>
+                                <option value="<%= companies[i]['id'] %>" selected><%= companies[i]['company_name'] %></option>
+                            <% } else { %>
+                                <option value="<%= companies[i]['id'] %>"><%= companies[i]['company_name'] %></option>
+                            <% } %>
                         <% } %>
-                    <% } %>
-                </select>
-            </div>
-            <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
-        </div>
+                      </select>
+                      <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
+                    </div>
+                  </div>
 
-        <div class="form-group">
-          <label for="Categories" class="col-sm-3 control-label">Category</label>
-          <div class="col-sm-5">
-            <select class="form-control" id="Category" name="category">
-              <% for(var i=0; i<categories.length; i++) { %>
-                <option value="<%= categories[i]['CATEGORY_NAME'] %>"><%= categories[i]['CATEGORY_NAME'] %></option>
-              <% } %>
-            </select>
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Product Name</label>
-          <div class="col-sm-5">
-            <input type="text" class="form-control" name="product_name" id="product_name" placeholder="Product Name">
-          </div>
-        </div>
+                  <div class="row">
+                    <div class="form-group col-md-12">
+                      <label for="Categories" class="control-label">Select Category</label>
+                      <select class="form-control" id="Category" name="category">
+                        <% for(var i=0; i<categories.length; i++) { %>
+                          <option value="<%= categories[i]['id'] %>"><%= categories[i]['CATEGORY_NAME'] %></option>
+                        <% } %>
+                      </select>                      
+                      <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
+                    </div>
+                  </div>
 
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Product Description</label>
-          <div class="col-sm-5">
-            <input type="textarea" class="form-control" name="product_description" id="product_description" placeholder="Product Description">
-          </div>
-        </div>
+                  <div class="row">
+                    <div class="form-group col-md-12">
+                      <label for="ProductName" class="control-label">Product Name</label>
+                      <input type="text" class="form-control" name="product_name" id="product_name" placeholder="Product Name" maxlength="200" required/>
+                      <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
+                    </div>
+                  </div>
 
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Product Price</label>
-          <div class="col-sm-5">
-            <input type="text" class="form-control" name="product_price" id="product_price" placeholder="Product Price">
-          </div>
-        </div>
+                  <div class="row">
+                    <div class="form-group col-md-12">
+                      <label for="ProductDesciption" class="control-label">Product Description</label>
+                      <textarea rows="4" cols="50" class="form-control" name="product_description" id="product_description" placeholder="Write a description" maxlength="200" required></textarea>
+                      <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
+                    </div>
+                  </div>
 
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Product Image</label>
-          <div class="col-sm-5">
-            <input type="file" class="form-control" name="product_image" id="product_image" placeholder="Product Image">
-          </div>
-        </div>
+                  <div class="row">
+                    <div class="form-group col-md-12">
+                      <label for="ProductPrice" class="control-label">Product Price(in Rs)</label>
+                      <input type="text" class="form-control" name="product_price" id="product_price" placeholder="Product Price" maxlength="10" pattern="^[0-9]+$" required/>
+                      <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
+                    </div>
+                  </div>
 
-        <div class="form-group">
-          <div class="col-sm-9 col-sm-offset-3">
-            <button type="submit" class="btn btn-info" id="addProductButton">Add Product</button>
+                  <div class="row">
+                    <div class="form-group col-md-12">
+                      <label for="ProductImage" class="control-label">Product Image</label>
+                      <input type="file" class="form-control" name="product_image" id="product_image" placeholder="Product Image" required/>
+                      <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
+                    </div>
+                  </div>
+
+                  <!-- Submit button -->
+                  <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" id="Register" class="btn btn-outline-primary">Register</button>
+                            <input id="Clear" class="btn btn-default" type="reset" name="clear" value="Reset" onclick="resetForm();" />
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </article>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>

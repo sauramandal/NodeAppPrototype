@@ -15,7 +15,9 @@ module.exports = {
 				product.product_description,
 				product.product_price,
 				product.product_image,
-				product.created_at
+				product.created_at,
+				product.company_id,
+				product.category_id
 			];
 			queryString = mysql.format(queryString, table);
 			connection.query(queryString, productObject, (err, rows) => {
@@ -43,7 +45,7 @@ module.exports = {
 	
 			connection.query(queryString, (err, rows) => {
 				if(err) {
-					return reject(err);
+					return reject(new Error(err));
 				} 
 				//console.log(rows);
 				resolve(rows);
@@ -53,7 +55,7 @@ module.exports = {
 
 	getCategories: function() {
 		return new Promise((resolve, reject) => {
-			let queryString = "SELECT CATEGORY_NAME FROM ??";
+			let queryString = "SELECT id, CATEGORY_NAME FROM ??";
 			let table = ["TB_CATEGORY"];
 			queryString = mysql.format(queryString, table);
 			connection.query(queryString, (err, rows) => {

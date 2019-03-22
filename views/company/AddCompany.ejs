@@ -10,139 +10,139 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 </head>
 <body>
-        <div class="row justify-content-center">
-                <div class="col-md-6">
-                <div class="card">
-                <header class="card-header">
-                    <a href="" class="float-right btn btn-outline-primary mt-1">Log in</a>
-                    <h4 class="card-title mt-2">Add Company</h4>
-                </header>
-                <article class="card-body">
-                        <input type="hidden" name="errorMessage" id="ErrorMessage" value=""/>
-                        <form data-toggle="validator" novalidate="true" id="AddCompany" name="addCompany" method="POST" action="">
-                                <div class="form-body">
-                                    <input id="HidText1" name="hidText1" type="hidden" value="" />
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            <label for="CompanyName" class="control-label">Company Name</label>
-                                            <input type="text" data-validate="true" class="form-control" id="CompanyName" name="companyName" maxlength="200" required/>
-                                            <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
-                                        </div>
+    <div class="row justify-content-center">
+            <div class="col-md-6">
+            <div class="card">
+            <header class="card-header">
+                <a href="" class="float-right btn btn-outline-primary mt-1">Log in</a>
+                <h4 class="card-title mt-2">Add Company</h4>
+            </header>
+            <article class="card-body">
+                    <input type="hidden" name="errorMessage" id="ErrorMessage" value=""/>
+                    <form data-toggle="validator" novalidate="true" id="AddProduct" name="addCompany" method="POST" action="">
+                            <div class="form-body">
+                                <input id="HidText1" name="hidText1" type="hidden" value="" />
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="CompanyName" class="control-label">Company Name</label>
+                                        <input type="text" data-validate="true" class="form-control" id="CompanyName" name="companyName" maxlength="200" required/>
+                                        <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
                                     </div>
-                
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            <label for="Address1" class="control-label">Address 1</label>
-                                            <input type="text" data-validate="true" class="form-control" id="Address1" name="address1" maxlength="100" required/>
-                                            <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
-                                        </div>
+                                </div>
+            
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="Address1" class="control-label">Address 1</label>
+                                        <input type="text" data-validate="true" class="form-control" id="Address1" name="address1" maxlength="100" required/>
+                                        <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
                                     </div>
-                
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            <label for="Address2" class="control-label">Address 2</label>
-                                            <input type="text" data-validate="true" class="form-control" id="Address2" name="address2" maxlength="100" />
-                                        </div>
+                                </div>
+            
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="Address2" class="control-label">Address 2</label>
+                                        <input type="text" data-validate="true" class="form-control" id="Address2" name="address2" maxlength="100" />
                                     </div>
-                
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label for="City" class="control-label">City</label>
-                                            <input type="text" data-validate="true" class="form-control" id="City" name="city" maxlength="50" required/>
-                                            <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="State" class="control-label">State</label>
-                                            <input type="text" data-validate="true" class="form-control" id="State" name="state" maxlength="50" required/>
-                                            <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
-                                        </div>
+                                </div>
+            
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="City" class="control-label">City</label>
+                                        <input type="text" data-validate="true" class="form-control" id="City" name="city" maxlength="50" required/>
+                                        <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
                                     </div>
-                
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label for="Zip" class="control-label">Zip code</label>
-                                            <input type="text" data-validate="true" class="form-control numbersOnly" id="Zip" name="zip" maxlength="10" 
-                                            pattern="^[0-9]+$"
-                                            required/>
-                                            <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="Country" class="control-label">Country</label>
-                                            <select class="form-control" id="Country" name="country">
-                                                <% for(var i=0; i<companies.length; i++) { %>
-                                                    <% if(companies[i]['nicename'] === "United States") { %>
-                                                        <option value="<%= companies[i]['nicename'] %>" selected><%= companies[i]['nicename'] %></option>
-                                                    <% } else { %>
-                                                        <option value="<%= companies[i]['nicename'] %>"><%= companies[i]['nicename'] %></option>
-                                                    <% } %>
+                                    <div class="form-group col-md-6">
+                                        <label for="State" class="control-label">State</label>
+                                        <input type="text" data-validate="true" class="form-control" id="State" name="state" maxlength="50" required/>
+                                        <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
+                                    </div>
+                                </div>
+            
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="Zip" class="control-label">Zip code</label>
+                                        <input type="text" data-validate="true" class="form-control numbersOnly" id="Zip" name="zip" maxlength="10" 
+                                        pattern="^[0-9]+$"
+                                        required/>
+                                        <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="Country" class="control-label">Country</label>
+                                        <select class="form-control" id="Country" name="country">
+                                            <% for(var i=0; i<companies.length; i++) { %>
+                                                <% if(companies[i]['nicename'] === "United States") { %>
+                                                    <option value="<%= companies[i]['nicename'] %>" selected><%= companies[i]['nicename'] %></option>
+                                                <% } else { %>
+                                                    <option value="<%= companies[i]['nicename'] %>"><%= companies[i]['nicename'] %></option>
                                                 <% } %>
-                                            </select>
-                                            <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
-                                        </div>
+                                            <% } %>
+                                        </select>
+                                        <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
                                     </div>
-                
+                                </div>
+            
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="Email" class="control-label">Email</label>
+                                        <input type="email" data-validate="true" class="form-control" id="Email" name="email" maxlength="99" 
+                                        patern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" required/>
+                                        <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="PhoneNumber" class="control-label">Phone</label>
+                                        <input type="text" data-validate="true" class="form-control numbersOnly" id="PhoneNumber" pattern="^[0-9]+$"
+                                        name="phoneNumber" maxlength="25" required />
+                                        <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
+                                    </div>
+                                </div>
+            
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="Username" class="control-label">Username</label>
+                                        <div class="input-group">
+                                            <span class="badge badge-danger" style="font-size: 22px">admin@</span>
+                                            <input type="text" placeholder="companyId" class="form-control" name="userName" data-validate="true" id="UserName" maxlength="20" required />
+                                        </div>
+                                        <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>  
+                                    </div>
+                                </div>
+            
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="Password" class="control-label">Password</label>
+                                        <input type="password" data-validate="true" class="form-control" id="Password" name="password" 
+                                        data-minlength="6"
+                                        data-minlength-error="Minimum of 6 characters" maxlength="49" required/>
+                                        <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="ConfirmPassword" class="control-label">Confirm Password</label>
+                                        <input type="password" data-validate="true" class="form-control" id="ConfirmPassword" name="confirmPassword" data-match="#Password"
+                                        data-match-error="Whoops, password don't match" placeholder="Confirm Password" 
+                                        required />
+                                        <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
+                                    </div>
+                                </div>
+            
+                                <!-- Submit button -->
+                                <div class="form-actions">
                                     <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label for="Email" class="control-label">Email</label>
-                                            <input type="email" data-validate="true" class="form-control" id="Email" name="email" maxlength="99" 
-                                            patern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" required/>
-                                            <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="PhoneNumber" class="control-label">Phone</label>
-                                            <input type="text" data-validate="true" class="form-control numbersOnly" id="PhoneNumber" pattern="^[0-9]+$"
-                                            name="phoneNumber" maxlength="25" required />
-                                            <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
-                                        </div>
-                                    </div>
-                
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            <label for="Username" class="control-label">Username</label>
-                                            <div class="input-group">
-                                                <span class="badge badge-danger" style="font-size: 22px">admin@</span>
-                                                <input type="text" placeholder="companyId" class="form-control" name="userName" data-validate="true" id="UserName" maxlength="20" required />
-                                            </div>
-                                            <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>  
-                                        </div>
-                                    </div>
-                
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label for="Password" class="control-label">Password</label>
-                                            <input type="password" data-validate="true" class="form-control" id="Password" name="password" 
-                                            data-minlength="6"
-                                            data-minlength-error="Minimum of 6 characters" maxlength="49" required/>
-                                            <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="ConfirmPassword" class="control-label">Confirm Password</label>
-                                            <input type="password" data-validate="true" class="form-control" id="ConfirmPassword" name="confirmPassword" data-match="#Password"
-                                            data-match-error="Whoops, password don't match" placeholder="Confirm Password" 
-                                            required />
-                                            <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
-                                        </div>
-                                    </div>
-                
-                                    <!-- Submit button -->
-                                    <div class="form-actions">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <button id="Register" class="btn btn-outline-primary">Register</button>
-                                                <!-- <input type="submit" name="register" id="Register" class="btn btn-info" value="Register" /> -->
-                                                <input id="Clear" class="btn btn-default" type="reset"
-                                                name="clear" value="Reset" onclick="resetForm();" />
-                                            </div>
+                                        <div class="col-md-12">
+                                            <button id="Register" class="btn btn-outline-primary">Register</button>
+                                            <!-- <input type="submit" name="register" id="Register" class="btn btn-info" value="Register" /> -->
+                                            <input id="Clear" class="btn btn-default" type="reset"
+                                            name="clear" value="Reset" onclick="resetForm();" />
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                    </article> <!-- card-body end .// -->
-                <div class="border-top card-body text-center">Have an account? <a href="">Log In</a></div>
-                </div> <!-- card.// -->
-            </div> <!-- col.//-->
-                
-        </div> <!-- row.//-->
+                            </div>
+                        </form>
+                </article> <!-- card-body end .// -->
+            <div class="border-top card-body text-center">Have an account? <a href="">Log In</a></div>
+            </div> <!-- card.// -->
+        </div> <!-- col.//-->
+            
+    </div> <!-- row.//-->
                                 
                 
     <script type="text/javascript" src="/public/assets/js/AddCompany.js"></script>
