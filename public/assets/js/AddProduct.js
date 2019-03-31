@@ -1,32 +1,32 @@
 $(document).ready(function() {
-  // $("#AddProduct").validator().on('submit', function(e) {
-  //   if(e.isDefaultPrevented()) { console.log('error'); }
-  //   else {
-  //     console.log('success');
-  //     e.preventDefault();
-  //     var form = $('#AddProduct');
-  //     console.log(form.serialize());
-  //     $.ajax({
-  //       method: 'POST',
-  //       url: '/products/addProduct',
-  //       data: form.serialize(),
-  //       success: successHandler
-  //     });
-  //   }
-  // });
+  $("#AddProduct").validator().on('submit', function(e) {
+    if(e.isDefaultPrevented()) { console.log('error'); }
+    else {
+      console.log('success');
+      e.preventDefault();
+      var form = $('#AddProduct')[0]; 
+      var formData = new FormData(form);     
+      $.ajax({
+        method: 'POST',
+        url: '/products/addProduct',
+        data: formData,
+        contentType: false, 
+        processData: false,
+        success: successHandler
+      });
+    }
+  });
 
-  $('#Register').on('click', function(event) {
+  /*$('#Register').on('click', function(event) {
     event.preventDefault();
     // validate the form here
     // if everything goes well then submit form else continue
-  debugger
-  });
+    
+  });*/
 });
 
 var successHandler = function(response) {
-  console.log(response);
-  var productDetails = JSON.parse(response); console.log(productDetails);
-  var form = $('#AddCompany');
+  var form = $('#AddProduct');
   form[0].reset();
   var messageText = "Product has been successfully added";
   showNotification("Added Product", messageText, "success", onRegisterClick);
@@ -51,5 +51,5 @@ var onRegisterClick = function() {
 };
 
 var resetForm = function() {
-  $('#AddCompany')[0].reset();
+  $('#AddProduct')[0].reset();
 };

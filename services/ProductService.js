@@ -7,10 +7,10 @@ const config = require('./../config');
 module.exports = {
 	addProduct: function(product) {
 		return new Promise((resolve, reject) => {
-			var queryString = "INSERT INTO ?? SET ?";
+			var queryString = "INSERT INTO ?? (`product_name`,`product_description`,`product_price`,`product_image`,\
+								`created_at`,`company_id`,`category_id`) VALUES (?,?,?,?,?,?,?)";
 			var table = ["TB_PRODUCT"];
 			var productObject = [ 
-				product.product_name,
 				product.product_name,
 				product.product_description,
 				product.product_price,
@@ -19,7 +19,7 @@ module.exports = {
 				product.company_id,
 				product.category_id
 			];
-			queryString = mysql.format(queryString, table);
+			queryString = mysql.format(queryString, table); console.log(queryString);
 			connection.query(queryString, productObject, (err, rows) => {
 				if(err) {
 					return reject({
@@ -27,7 +27,6 @@ module.exports = {
 						"message": "error in executing sql query"
 					});
 				}
-				console.log('Resolved');
 				resolve({
 					"error": false,
 					"message": "query executed successfully"

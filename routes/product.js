@@ -79,20 +79,21 @@ router.post('/addProduct', (req, res) => {
 	if(uploadedFile.mimetype === 'image/png' || uploadedFile.mimetype === 'image/jpeg' ||
 		uploadedFile.mimetype === 'image/gif') {
 
-		//upload file to /public/assets/img/${imageName}
-		uploadedFile.mv(`public/assets/img/${imageName}`, (err) => {
+		//upload file to /public/assets/images/${imageName}
+		uploadedFile.mv(`public/assets/images/${imageName}`, (err) => {
 			if(err) {
 				return res.status(500).send(err);
 			}
-			res.status(200).send({"message": "OK"});
-			/*ProductService
+			
+			ProductService
 				.addProduct(product)
-				.then((res) => {
-					return res.redirect('/');
+				.then((response) => {
+					console.log('Resolved');
+					return res.status(200).send({"message": "OK"});
 				})
 				.catch((err) => {
 					return res.status(500).send(err);
-				}); */
+				}); 
 		});
 	}
 	else {
