@@ -13,8 +13,7 @@ router.get('/addProduct', async (req, res) => {
 			ProductService.getCompanies(),
 			ProductService.getCategories()
 		]);
-		//console.log(companies); console.log(categories);
-		// let categories = await ;
+		
 		return res.render('product/add-product.ejs', {
 			title: 'Add a product',
 			companies,
@@ -118,6 +117,10 @@ router.get('/:id/editProduct', (req, res) => {
 		.catch((err) => {
 			return res.status(500).send(err);
 		});
+});
+
+router.get('/show', (req, res) => {
+
 });
 
 module.exports = router;
