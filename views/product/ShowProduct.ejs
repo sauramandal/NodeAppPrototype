@@ -1,0 +1,33 @@
+<%- include ../partials/header.ejs %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="/public/assets/images/<%= productDetails[0].product_image %>" class="img-responsive" alt="">
+        </div>
+        <div class="col-md-6">
+            <div class="">
+                <label>Product Name</label>
+                <h3><%= productDetails[0].product_name %></h3>
+            </div>
+            <div class="">
+                <label>Product Description</label>
+                <h3><%= productDetails[0].product_description %></h3>
+            </div>
+            <div class="">
+                <label>Product Price</label>
+                <h3>₹ <%= productDetails[0].product_price %> only</h3> 
+            </div>
+            <form action="/products/addToCart" id="AddProdsToCart">
+                <input type="hidden" id="" name="ProductId" class="" value="">
+                <input type="hidden" id="" name="UserId" class="" value="">
+                <input type="hidden" id="" name="ProductName" class="" value="">
+                <input type="hidden" id="" name="ProductDescription" class="" value="">
+                <input type="hidden" id="" name="ProductPrice" class="" value="">
+                <input type="submit" class="btn btn-success" value="Add to Cart">
+            </form>
+        </div>                  
+
+        </div>
+    </div>
+</div>
+<script src="" type="text/javascript"></script>

@@ -5,10 +5,10 @@ const jwt = require('jsonwebtoken');
 const config = require('./../config');
 
 module.exports = {
-  addUser: function(post) {
+  checkUser: function(email) {
     return new Promise((resolve, reject) => {
       var queryString = "SELECT email FROM ?? WHERE ?? = ?";
-      var table = ["USER", "email", post.email];
+      var table = ["USER", "email", email];
       queryString = mysql.format(queryString, table);
       connection.query(queryString, (err, rows) => {
         if (err)  {
@@ -17,49 +17,52 @@ module.exports = {
             "message": "Error in executing sql"
           });
         }
-        else {
-          //query executed successfully
-          if(rows.length == 0) {
-            //Create an user object
-            var userObject = [
-              post.first_name,
-              post.last_name,
-              post.dob,
-              post.device_type,
-              post.latitude,
-              post.longitude,
-              post.email,
-              md5(post.password),
-              post.phone_number,
-              post.is_verified,
-              post.block_status
-            ];
-            //Insert new user
-            var queryString = "INSERT INTO ?? (`first_name`, `last_name`, `dob`, `device_type`, `latitude`,`longitude`, `email`, `password`, \
-                               `phone_number`,`is_verified`,`block_status`)  \
-                               values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
-            var table = ["USER"];
-            queryString = mysql.format(queryString, table);
-            connection.query(queryString, userObject, (err, rows) => {
-                console.log("Hi");
-                if(err) {
-                  return reject({
-                    "error": true,
-                    "message": "Error in executing sql"
-                  });
-                }
-
-                resolve({
-                  "Error": false,
-                  "Message": "Success"
-                });
-
-            });
-          }
-        }
+        resolve({
+          rows
+        });
       });
     });
   },
+
+  addUser: function(post) {
+    return new Promise((resolve, reject) => {
+      //Create an user object
+      var userObject = [
+        post.first_name,
+        post.last_name,
+        post.dob,
+        post.device_type,
+        post.latitude,
+        post.longitude,
+        post.email,
+        md5(post.password),
+        post.phone_number,
+        post.is_verified,
+        post.block_status
+      ];
+      //Insert new user
+      var queryString = "INSERT INTO ?? (`first_name`, `last_name`, `dob`, `device_type`, `latitude`,`longitude`, `email`, `password`, \
+                        `phone_number`,`is_verified`,`block_status`)  \
+                        values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+      var table = ["USER"];
+      queryString = mysql.format(queryString, table);
+      connection.query(queryString, userObject, (err, rows) => {
+          console.log("Hi");
+          if(err) {
+            return reject({
+              "error": true,
+              "message": "Error in executing sql"
+            });
+          }
+
+          resolve({
+            rows
+          });
+
+      });
+    });
+  },
+
 
   userLoginCheckService: function(post) {
     //return a new promise object
@@ -74,22 +77,39 @@ module.exports = {
             "message": "Error in executing sql"
           });
         }
-
+        resolve(rows);
         //query successfully executed
-        else {
-          if(rows.length == 1) {
-            var token = jwt.sign({rows}, config.secret, { expiresIn: 1440 });
-            return resolve({
-              "error": false,
-              "message": "Token generated for user"
-            });
-          } else {
-            return reject({
-              "error": true,
-              "message": "error in token generation"
-            });
-          }
-        }
+        // else {
+        //   if(rows.length == 1) {
+        //     var token = jwt.sign({rows}, config.secret, { expiresIn: 1440 });
+        //     return resolve({
+        //       "error": false,
+        //       "message": "Token generated for user"
+        //     });
+        //   } else {
+        //     return reject({
+        //       "error": true,
+        //       "message": "error in token generation"
+        //     });
+        //   }
+        // }
+      });
+    });
+  },
+
+  userLogIn: function(rows) {
+    return new Promise((resolve, reject) => {
+      if(rows.length) {
+        var token = jwt.sign({rows}, config.secret, {expiresIn: 1440});
+        return resolve({
+          "error": false, 
+          "message": "Token generated for user",
+          token
+        });
+      }
+      return reject({
+        "error": true,
+        "message": "error in token generation"
       });
     });
   },

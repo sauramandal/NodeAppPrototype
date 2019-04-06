@@ -7,62 +7,94 @@ const {connection} = require('./../database');
 const config = require('./../config');
 const {validationResult} = require('express-validator/check');
 const UserService = require('./../services/UserService');
+const IndexService = require('../services/IndexService');
+const {dashboard} = require('../routes/index');
 
-var addNewUser = (req, res) => {
-    var date = new Date();
-    var post = {
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        email: req.body.email,
-        password: req.body.password,
-        dob: req.body.dob,
-        phone_number: req.body.phone_number,
-        device_type: req.body.device_type,
-        latitude: req.body.latitude,
-        longitude: req.body.longitude,
-        is_verified: req.body.is_verified,
-        block_status: req.body.block_status
-    };
-    console.log(post);
-    UserService
-        .addUser(post)
-        .then((res) => {
+var addNewUserTemplate = (req, res) => {
+    res.render('users/signup.ejs', {
+        title: 'User SignUp Page'
+    });
+};
+var addNewUser = async(req, res) => {
+    try {
+        var date = new Date();
+        var post = {
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            email: req.body.email,
+            password: req.body.password,
+            dob: req.body.dob,
+            phone_number: req.body.phone_number,
+            device_type: req.body.device_type,
+            latitude: req.body.latitude,
+            longitude: req.body.longitude,
+            is_verified: req.body.is_verified,
+            block_status: req.body.block_status
+        };
+        //console.log(post);
+        let checkUserExistence = await UserService.checkUser(post.email);
+        console.log(checkUserExistence.rows.length);
+        if(checkUserExistence.rows.length) {
             return res.json({
-                message: "user added",
-                result: res
+                message: "user already exist",
+                error: true
             });
-        })
-        .catch((err) => {
-            //handle error or log error
+        }
+        else {
+            let addUser = await UserService.addUser(post);
             return res.json({
-                message: "unable to add user",
-                result: err
+                message: "user signed up successfully",
+                error: false
             });
+        }
+    } catch(err) {
+        return res.json({
+            "message": "some error occured",
+            "error": err
         });
+    }
 };
 
-var userLoginCheck = (req, res) => {
+var userLoginCheck = async(req, res) => {
     //console.log(req.body);
-    var errors = validationResult(req);
-    if(!errors.isEmpty()) {
-        res.status(400).json(errors.array());
-    }
-    var post = {
-        email: req.body.email,
-        password: req.body.password
-    };
-    UserService
-        .userLoginCheckService(post)
-        .then((res) => {
+    //var errors = validationResult(req);
+    // if(!errors.isEmpty()) {
+    //     res.status(400).json(errors.array());
+    // }
+    try {
+        var post = {
+            email: req.body.email,
+            password: req.body.password
+        };
+        var isUserExisted = await UserService.userLoginCheckService(post);
+        console.log(isUserExisted);
+        if(isUserExisted.length) {
+            var loggedIn = await UserService.userLogIn(isUserExisted);
+            dashboard(req, res);
+            // return res.json({
+            //     "message": "logged in successfully", 
+            //     "error": false, 
+            //     "token": loggedIn.token
+            // });
+            
+            // return res.render('index.ejs', {
+            //     title: 'Dashboard',
+            //     getRandomProducts,
+            //     getTopTenProducts
+            // }); 
+        } else {
             return res.json({
-                message: "user logged in"
+                "message": "no user exists", 
+                "error": true
             });
-        })
-        .catch(err => {
-            return res.json({
-                message: "user unable to log in"
-            });
+        }
+    } catch(err) {
+        //handle error
+        return res.json({
+            "message": "some error occured",
+            "error": err
         });
+    }
 };
 
 var myProtectedRoute = (req, res) => {
@@ -119,4 +151,4 @@ var editUser = (req, res) => {
         });
 };
 
-module.exports = {addNewUser, userLoginCheck, findAllUsers, myProtectedRoute, editUser};
+module.exports = {addNewUserTemplate, addNewUser, userLoginCheck, findAllUsers, myProtectedRoute, editUser};

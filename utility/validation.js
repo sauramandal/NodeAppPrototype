@@ -6,8 +6,7 @@ var loginValidation = [
   //validate email and password
   check('email')
       .isEmail()
-      .withMessage("Provide proper email")
-      .normalizeEmail(),
+      .withMessage("Provide proper email"),
   check('password')
       .isLength({ min: 8 })
       .withMessage("min password length must be of 8 characters")
@@ -35,8 +34,7 @@ var signUpValidation = [
       .isLength({ min: 2}).withMessage("must contains atleast 2 characters")
       .trim().escape(),
   check('email')
-      .isEmail().withMessage("Provide proper email")
-      .normalizeEmail(),
+      .isEmail().withMessage("Provide proper email"),
   check('password')
       .isLength({ min: 8 }).withMessage("min password length must be of 8 characters")
       .matches(/^(?=.*[a-z])[a-zA-Z]{8,20}$/).withMessage("Password must contain a valid combination of letters")

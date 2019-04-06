@@ -108,10 +108,10 @@ router.get('/:id/editProduct', (req, res) => {
 	let productId = req.params.id;
 	ProductService
 		.editProduct(productId)
-		.then((res) => {
+		.then((result) => {
 			res.render('product/edit-product.ejs', {
 				title: 'Edit Player',
-				players: res.products
+				players: result.products
 			});
 		})
 		.catch((err) => {
@@ -119,8 +119,36 @@ router.get('/:id/editProduct', (req, res) => {
 		});
 });
 
-router.get('/show', (req, res) => {
+router.get('/:id/show', (req, res) => {
+	let productId = req.params.id;
+	ProductService
+		.showProduct(productId)
+		.then((result) => {
+			res.render('product/ShowProduct.ejs', {
+				title: 'Show product details',
+				productDetails: result
+			});
+		})
+		.catch((err) => {
+			return res.status(500).send(err);
+		});
+});
 
+router.post('/addToCart', (req, res) => {
+	let productId = req.body.ProductId;
+	let userId = req.body.UserId;
+	let quantity;
+	let price; 
+	let totalDiscountedPrice = 0.0;
+	ProductService
+		.addProductsToCart(productId, userId, quantity, price)
+		.then((result) => {
+
+		})
+		.catch((err) => {
+			
+		});
+	
 });
 
 module.exports = router;

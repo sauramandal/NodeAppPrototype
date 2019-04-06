@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="../../public/assets/css/authorize.css" type="text/css">
+    <script src="../../public/assets/plugins/jquery.min.js"></script>
+    <script type="text/javascript" src="../../public/assets/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../public/assets/bootstrap/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+    <div class="form-wrap">
+        <div class="tabs">
+            <h3 class="signup-tab"><a class="active" href="#signup-tab-content">Sign Up</a></h3>
+            <h3 class="login-tab"><a href="#login-tab-content">Login</a></h3>
+        </div><!--.tabs-->
+    
+        <div class="tabs-content">
+            <div id="signup-tab-content" class="active">
+                <form class="signup-form" id="SignUpForm" action="" method="post">
+                    <input type="hidden" name="latitude" value="0.00"/>
+                    <input type="hidden" name="longitude" value="0.00"/>
+                    <input type="hidden" name="is_verified" value="0"/>
+                    <input type="hidden" name="device_type" value='web'/>
+                    <input type="hidden" name="block_status" value="0"/>
+                    <div>
+                        <label for="name" id="">First Name</label>
+                        <input type="text" class="input" name="first_name" id="FirstName" autocomplete="off">
+                    </div>
+                    <div>
+                        <label for="name" id="">Last Name</label>
+                        <input type="text" class="input" name="last_name" id="LastName" autocomplete="off">
+                    </div>
+                    <div>
+                        <label for="name" id="">Birthday</label>
+                        <input type="text" class="input" name="dob" id="Datepicker" autocomplete="off">
+                    </div>
+                    <div>
+                        <label for="name" id="">Phone Number</label>
+                        <input type="text" class="input" name="phone_number" id="PhoneNumber" autocomplete="off">
+                    </div>
+                    <div>
+                        <label for="name" id="">Email</label>
+                        <input type="email" class="input" name="email" id="Email" autocomplete="off">
+                    </div>
+                    <div>
+                        <label for="name" id="">Password</label>
+                        <input type="password" class="input" name="password" id="SignupPassword" autocomplete="off">
+                    </div>
+                    
+                    <button id="Register" class="btn btn-outline-primary">Sign Up</button>
+                </form>
+                <div class="help-text">
+                    <p>By signing up, you agree to our</p>
+                    <p><a href="#">Terms of service</a></p>
+                </div><!--.help-text-->
+            </div><!--.signup-tab-content-->
+    
+            <div id="login-tab-content">
+                <form class="login-form" id="LoginForm" action="/login" method="post">
+                    <div>
+                        <label for="name" id="">Email</label>
+                        <input type="text" class="input" name="email" id="user_login" autocomplete="off" placeholder="Email or Username">
+                    </div>
+                    <div>
+                        <label for="name" id="">Password</label>
+                        <input type="password" class="input" name="password" id="user_pass" autocomplete="off" placeholder="Password">
+                    </div>
+                    
+                    <button id="Login" type="submit" class="btn btn-outline-success">Login</button>
+                </form><!--.login-form-->
+                <div class="help-text">
+                    <p><a href="#">Forgot your password?</a></p>
+                </div>
+            </div>
+        </div><!--.tabs-content-->
+    </div><!--.form-wrap-->
+    <script src="../../public/assets/js/loginandsignup.js" type="text/javascript"></script>
+</body>

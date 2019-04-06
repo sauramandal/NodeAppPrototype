@@ -6,11 +6,11 @@ const mysql = require('mysql');
 const fileUpload = require('express-fileupload');
 const jwt = require('jsonwebtoken');
 const config = require('./config');
-const { signUpValidation, loginValidation } =  require('./utility/validation');
 
+const { signUpValidation, loginValidation } =  require('./utility/validation');
 const {ensureToken} = require('./middleware/ensureToken');
 const {check, validationResult} = require('express-validator/check');
-const {addNewUser, userLoginCheck, findAllUsers, myProtectedRoute, editUser} = require('./routes/user');
+const {addNewUserTemplate, addNewUser, userLoginCheck, findAllUsers, myProtectedRoute, editUser} = require('./routes/user');
 const {dashboard} = require('./routes/index');
 const {editCompanyDetails} = require('./routes/company');
 
@@ -29,6 +29,7 @@ app.use(fileUpload());
 
 // Custom Routes for User
 app.get('/index', dashboard);
+app.get('/signup', addNewUserTemplate);
 app.post('/signup',signUpValidation, addNewUser);
 app.post('/login', loginValidation, userLoginCheck);
 app.post('/:id/editUser',signUpValidation, editUser);

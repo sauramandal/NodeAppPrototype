@@ -76,7 +76,7 @@ module.exports = {
 				if(err) {
 					return reject({
 						"error": true,
-						"message": "query successfully executed"
+						"message": "query failed execution"
 					});
 				} 
 				resolve({
@@ -85,6 +85,26 @@ module.exports = {
 					"products": rows
 				});
 			});
+		});
+	}, 
+
+	showProduct: function(productId) {
+		return new Promise((resolve, reject) => {
+			let queryString = "SELECT * FROM ?? WHERE id = ?";
+			let table = ["TB_PRODUCT"];
+			queryString = mysql.format(queryString, table);
+			connection.query(queryString, productId, (err, rows, fields) => {
+				if(err) {
+					return reject(new Error("Query execution failed"));
+				}
+				resolve(rows);
+			});
+		});
+	}, 
+
+	addProductsToCart: function(productId, userId, quantity, price) {
+		return new Promise((resolve, reject) => {
+			let queryString = "SELECT COUNT(user_id) FROM ?? WHERE ? = ??; ";
 		});
 	}
 }
