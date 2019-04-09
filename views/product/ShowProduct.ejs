@@ -15,7 +15,7 @@
         <script src="../../public/assets/js/dashboard.js"></script>
     </head>
     <body>
-        <div class="container">
+        <div class="container-header">
             <nav class="navbar navbar-default">
                 <div class="navbar-header">
                     <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
@@ -193,23 +193,6 @@
 
         </div>
     </div>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            var quantity = 0;
-            $('.quantity-right-plus').click(function(e) {
-                //prevent default button action
-                e.preventDefault();
-                var quantity = parseInt($('#quantity').val());
-                if(quantity<5)
-                    $('#quantity').val(quantity + 1); //inc
-            });
-            $('.quantity-left-minus').click(function(e) {
-                e.preventDefault();
-                var quantity = parseInt($('#quantity').val());
-                if(quantity>1)
-                    $('#quantity').val(quantity - 1); //dec
-            });
-        });
-    </script>
+    <script type="text/javascript" src="../../public/assets/js/ShowProduct.js"></script>
 </body>
 </html>

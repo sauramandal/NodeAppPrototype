@@ -125,8 +125,6 @@ router.get('/:id/show', ensureToken, async(req, res) => {
 	try {
 		var productId = req.params.id;
 		var userId = req.userId;
-		//console.log(req.headers);
-		//console.log(req.userId);
 
 		//get userData from userId
 		var userData = await UserService.showUserData(userId);
@@ -155,7 +153,7 @@ router.get('/:id/show', ensureToken, async(req, res) => {
 	}
 });
 
-router.get('/addToCart', async(req, res) => {
+router.get('/addToCart', ensureToken, async(req, res) => {
 	try {
 		var productId = req.query.ProductId;
 		var userId = req.query.UserId;
@@ -190,6 +188,12 @@ router.get('/addToCart', async(req, res) => {
 		//get all the cart items of current user and show it
 		var showCartItems = await ProductService.getAllCartItems(currentOrderId);
 		console.log(showCartItems);
+		//get user data
+		var userData = await UserService.showUserData(userId);
+		return res.render('product/ShowCart.ejs', {
+			cartItems: showCartItems,
+			userData
+		});
 	} catch(exception) {
 		return res.json({
 			"message" : "An exception occurred",

@@ -12,12 +12,8 @@
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <link href="../../public/assets/css/main.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../public/assets/css/showcart.css">
         <script src="../../public/assets/js/dashboard.js"></script>
-        <script>
-            var t = '<%- token %>';
-            localStorage.setItem("Token", t);
-            document.cookie = 'token='+t;
-        </script></a></li>
     </head>
     <body>
         <div class="container-header">
@@ -29,7 +25,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">MegaMenu</a>
+                    <a class="navbar-brand" href="/index">MegaMenu</a>
                 </div>
             
             
@@ -133,17 +129,10 @@
                             <%= 'Anonymous' %>
                         <% } %>
                     </a></li>
-                    <li><a href="#">Dump</a></li>
-                        
+                    <li><a href="#">Another action</a></li>
                     <li><a href="#">Something else here</a></li>
                     <li class="divider"></li>
-                    <li><a id="LogoutButton" href="/signup">Logout</a>
-                        <script>
-                            $('#LogoutButton').on('click', function(e) {
-                                document.cookie = "token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
-                            });    
-                        </script>
-                    </li>
+                    <li><a href="/signup">Logout</a></li>
                   </ul>
                 </li>
               </ul>
@@ -152,91 +141,132 @@
                 <!-- /.nav-collapse -->
             </nav>
     </div>
-    <!-- Load images of products -->
-<div class="container">
-        <div class="row">
-            <div class="MultiCarousel" data-items="1,3,5,6" data-slide="1" id="MultiCarousel"  data-interval="1000">
-                <div class="MultiCarousel-inner">
-                    <% for(var i=0; i<getRandomProducts.length; i++) { %>
-                        <div class="item">
-                            <div class="pad15">
-                                <p class="lead"></p>
-                                <h4><strong><%= getRandomProducts[i].product_name %></strong></h4>
-                                <a href="products/<%= getRandomProducts[i].id %>/show">
-                                    <img src="/public/assets/images/<%= getRandomProducts[i].product_image %>" class="img-responsive" style="height: 250px; width: 100%;" alt="">
-                                </a>
-                                <h3>₹ <%= getRandomProducts[i].product_price %></h3>
-                                <p>20% off</p>
-                            </div>            
-                        </div>
-                    <% } %>
-                    <div class="item">
-                        <div class="pad15">
-                            <p class="lead">Multi Item Carousel</p>
-                            <p>₹ 1</p>
-                            <p>₹ 6000</p>
-                            <p>50% off</p>
-                        </div>
+    
+    <div class="shopping-cart">
+        <header id="site-header">
+            <div class="container">
+                <h2>Cart Items<h2>
+            </div>
+        </header>
+    
+        <div class="container">
+            <section id="cart"> 
+                <article class="product">
+                    <header>
+                        <a class="remove">
+                            <img src="http://www.astudio.si/preview/blockedwp/wp-content/uploads/2012/08/1.jpg" alt="">
+                            <h3>Remove product</h3>
+                        </a>
+                    </header>
+    
+                    <div class="content">
+    
+                        <h1>Lorem ipsum</h1>
+    
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque.
+    
+                        
                     </div>
-                    <div class="item">
-                        <div class="pad15">
-                            <p class="lead">Multi Item Carousel</p>
-                            <p>₹ 1</p>
-                            <p>₹ 6000</p>
-                            <p>50% off</p>
-                        </div>
+    
+                    <footer class="content">
+                        <span class="qt-minus">-</span>
+                        <span class="qt">2</span>
+                        <span class="qt-plus">+</span>
+    
+                        <h2 class="full-price">
+                            29.98€
+                        </h2>
+    
+                        <h2 class="price">
+                            14.99€
+                        </h2>
+                    </footer>
+                </article>
+    
+                <article class="product">
+                    <header>
+                        <a class="remove">
+                            <img src="http://www.astudio.si/preview/blockedwp/wp-content/uploads/2012/08/3.jpg" alt="">
+    
+                            <h3>Remove product</h3>
+                        </a>
+                    </header>
+    
+                    <div class="content">
+    
+                        <h1>Lorem ipsum dolor</h1>
+    
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque.
+    
                     </div>
-                    <div class="item">
-                        <div class="pad15">
-                            <p class="lead">Multi Item Carousel</p>
-                            <p>₹ 1</p>
-                            <p>₹ 6000</p>
-                            <p>50% off</p>
-                        </div>
+    
+                    <footer class="content">
+                        
+                        <span class="qt-minus">-</span>
+                        <span class="qt">1</span>
+                        <span class="qt-plus">+</span>
+    
+                        <h2 class="full-price">
+                            79.99€
+                        </h2>
+    
+                        <h2 class="price">
+                            79.99€
+                        </h2>
+                    </footer>
+                </article>
+    
+                <article class="product">
+                    <header>
+                        <a class="remove">
+                            <img src="http://www.astudio.si/preview/blockedwp/wp-content/uploads/2012/08/5.jpg" alt="">
+    
+                            <h3>Remove product</h3>
+                        </a>
+                    </header>
+    
+                    <div class="content">
+    
+                        <h1>Lorem ipsum dolor ipsdu</h1>
+    
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque.
                     </div>
-                    <div class="item">
-                        <div class="pad15">
-                            <p class="lead">Multi Item Carousel</p>
-                            <p>₹ 1</p>
-                            <p>₹ 6000</p>
-                            <p>50% off</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="pad15">
-                            <p class="lead">Multi Item Carousel</p>
-                            <p>₹ 1</p>
-                            <p>₹ 6000</p>
-                            <p>50% off</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="pad15">
-                            <p class="lead">Multi Item Carousel</p>
-                            <p>₹ 1</p>
-                            <p>₹ 6000</p>
-                            <p>50% off</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="pad15">
-                            <p class="lead">Multi Item Carousel</p>
-                            <p>₹ 1</p>
-                            <p>₹ 6000</p>
-                            <p>50% off</p>
-                        </div>
-                    </div>
+    
+                    <footer class="content">
+                        
+                        <span class="qt-minus">-</span>
+                        <span class="qt">3</span>
+                        <span class="qt-plus">+</span>
+    
+                        <h2 class="full-price">
+                            53.99€
+                        </h2>
+    
+                        <h2 class="price">
+                            17.99€
+                        </h2>
+                    </footer>
+                </article>
+    
+            </section>
+    
+        </div>
+        
+        <footer id="site-footer">
+            <div class="container clearfix">
+                <div class="left">
+                    <h2 class="subtotal">Subtotal: <span>163.96</span>€</h2>
+                    <h3 class="tax">Taxes (5%): <span>8.2</span>€</h3>
+                    <h3 class="shipping">Shipping: <span>5.00</span>€</h3>
                 </div>
-                <button class="btn btn-info leftLst"><</button>
-                <button class="btn btn-info rightLst">></button>
+                <div class="right">
+                    <h1 class="total">Total: <span>177.16</span>€</h1>
+                    <a class="btn">Checkout</a>
+                </div>   
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <br/><br/><br/>
-                <hr/>
-            </div>
-        </div>
+        </footer>
     </div>
-</body> 
-
+    
+    <script type="text/javascript" src="../../public/assets/js/ShowCart.js"></script>
+</body>
+</html>
