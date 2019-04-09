@@ -178,7 +178,14 @@ router.get('/addToCart', async(req, res) => {
 		} else {
 			console.log(getOrderId);
 			var currentOrderId = getOrderId[0].ID;
-			var addAndUpdateOrderDetails = await ProductService.addOrderDetails(currentOrderId, productId, quantity, currentOrderAmount);
+			//block duplicate orders from same user
+			var isProductRepeated = await ProductService.checkExistingProductOrder(currentOrderId, productId);
+			if(isProductRepeated) { //show cart items 
+				console.log('Repeated');
+			}
+			else {
+				var addAndUpdateOrderDetails = await ProductService.addOrderDetails(currentOrderId, productId, quantity, currentOrderAmount);
+			}	
 		}
 		//get all the cart items of current user and show it
 		var showCartItems = await ProductService.getAllCartItems(currentOrderId);
