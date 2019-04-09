@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const mysql = require('mysql');
 const fileUpload = require('express-fileupload');
 const jwt = require('jsonwebtoken');
@@ -22,13 +23,14 @@ app.set('views', __dirname + '/views'); //set express to look in this directory 
 app.set('view engine', 'ejs'); //configure template engine
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use('/public', express.static(__dirname + '/public'));
 app.use(fileUpload());
 
 //Custom Routes for Products
 
 // Custom Routes for User
-app.get('/index', dashboard);
+app.get('/index', ensureToken, dashboard);
 app.get('/signup', addNewUserTemplate);
 app.post('/signup',signUpValidation, addNewUser);
 app.post('/login', loginValidation, userLoginCheck);

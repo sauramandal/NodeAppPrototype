@@ -5,6 +5,8 @@ const {connection} = require('./../database');
 const md5 = require('md5');
 const config = require('./../config');
 const fileUpload = require('express-fileupload');
+const {ensureToken} = require('../middleware/ensureToken');
+const UserService = require('./../services/UserService');
 
 router.get('/addProduct', async (req, res) => {
 	try {
@@ -119,36 +121,74 @@ router.get('/:id/editProduct', (req, res) => {
 		});
 });
 
-router.get('/:id/show', (req, res) => {
-	let productId = req.params.id;
-	ProductService
-		.showProduct(productId)
-		.then((result) => {
-			res.render('product/ShowProduct.ejs', {
-				title: 'Show product details',
-				productDetails: result
-			});
-		})
-		.catch((err) => {
-			return res.status(500).send(err);
+router.get('/:id/show', ensureToken, async(req, res) => {
+	try {
+		var productId = req.params.id;
+		var userId = req.userId;
+		//console.log(req.headers);
+		//console.log(req.userId);
+
+		//get userData from userId
+		var userData = await UserService.showUserData(userId);
+		//console.log(userData[0].first_name);
+		if(userData) {
+			let prodDetails = await ProductService.showProduct(productId);
+			console.log(prodDetails);
+			if(prodDetails) {
+				return res.render('product/ShowProduct.ejs', {
+					title: 'Show product details',
+					productDetails: prodDetails,
+					userData,
+					userId,
+					productId 
+				});
+			}
+			return res.json({"message": 'unable to show product'});
+		} else {
+			return res.json({"message": 'no user exist'});
+		}
+	} catch(e) {
+		return res.json({
+			"message": 'An exception occurred',
+			"details": e
 		});
+	}
 });
 
-router.post('/addToCart', (req, res) => {
-	let productId = req.body.ProductId;
-	let userId = req.body.UserId;
-	let quantity;
-	let price; 
-	let totalDiscountedPrice = 0.0;
-	ProductService
-		.addProductsToCart(productId, userId, quantity, price)
-		.then((result) => {
-
-		})
-		.catch((err) => {
+router.get('/addToCart', async(req, res) => {
+	try {
+		var productId = req.query.ProductId;
+		var userId = req.query.UserId;
+		var quantity = req.query.quantity;
+		var currentOrderAmount = req.query.ProductPrice;
+		var price; 
+		var totalDiscountedPrice = 0.0;
+		//update orders table iff user_id is not present in orders table
+		var getOrderId = await ProductService.getOrderId(userId);
+		
+		if(getOrderId.length == 0) {
+			//Add current order
 			
+			var orderDate = new Date();
+			var orderAmount = 0;
+			var isPlaced = false;
+			//console.log(userId); console.log(orderDate); console.log(currentOrderAmount); console.log(isPlaced);
+			var addedOrder = await ProductService.addOrder(userId, orderDate, currentOrderAmount, isPlaced);
+			console.log(addedOrder);
+		} else {
+			console.log(getOrderId);
+			var currentOrderId = getOrderId[0].ID;
+			var addAndUpdateOrderDetails = await ProductService.addOrderDetails(currentOrderId, productId, quantity, currentOrderAmount);
+		}
+		//get all the cart items of current user and show it
+		var showCartItems = await ProductService.getAllCartItems(currentOrderId);
+		console.log(showCartItems);
+	} catch(exception) {
+		return res.json({
+			"message" : "An exception occurred",
+			"details": exception
 		});
-	
+	}
 });
 
 module.exports = router;

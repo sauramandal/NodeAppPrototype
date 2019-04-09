@@ -18,13 +18,13 @@
         <div class="container">
             <nav class="navbar navbar-default">
                 <div class="navbar-header">
-                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">MegaMenu</a>
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">MegaMenu</a>
                 </div>
             
             
@@ -115,6 +115,23 @@
             
                     </li>
                 </ul>
+                    
+          <!-- Right nav dropdown -->      
+          <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
+                  <ul class="dropdown-menu" style="width: 200px;">
+                    <li><a href="#">
+                        <% if(userData != '') %>
+                        <%= userData.rows.first_name %>
+                    </a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </li>
+              </ul>
             
                 </div>
                 <!-- /.nav-collapse -->

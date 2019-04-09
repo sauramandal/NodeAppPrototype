@@ -100,7 +100,7 @@ module.exports = {
   userLogIn: function(rows) {
     return new Promise((resolve, reject) => {
       if(rows.length) {
-        var token = jwt.sign({rows}, config.secret, {expiresIn: 1440});
+        var token = jwt.sign({rows}, config.secret, {expiresIn: "1h"});
         return resolve({
           "error": false, 
           "message": "Token generated for user",
@@ -110,6 +110,23 @@ module.exports = {
       return reject({
         "error": true,
         "message": "error in token generation"
+      });
+    });
+  },
+
+  showUserData: function(userId) {
+    return new Promise((resolve, reject) => {
+      var queryString = "SELECT * FROM ?? WHERE ?? = ?";
+      var values = ["user", "user_id", userId];
+      queryString = mysql.format(queryString, values);
+      connection.query(queryString, (err, rows, fields) => {
+        if(err) {
+          return reject({
+            "error": true,
+            "message": err
+          });
+        }
+        resolve(rows);
       });
     });
   },

@@ -102,6 +102,94 @@ module.exports = {
 		});
 	}, 
 
+	getOrderId: function(userId) {
+		return new Promise((resolve, reject) => {
+			let queryString = "SELECT ID FROM ?? WHERE ?? = ? AND ?? = ?";
+			let tableValues = ["TB_ORDER", "USER_ID", userId, "ORDER_PLACED", 0];
+			queryString = mysql.format(queryString, tableValues);
+			connection.query(queryString, (err, rows) => {
+				if(err) {
+					reject({
+						"message": "err in query execution",
+						err 
+					});
+				}
+				resolve(rows);
+			});
+		});
+	},
+
+	checkExistingProductOrder: function(orderId, productId) {
+		return new Promise((resolve, reject) => {
+			let queryString = "SELECT COUNT(?) FROM ?? WHERE ?? = ? AND ?? = ?";
+			let tableValues = ["id", "TB_ORDER_DETAILS", "ORDER_ID", orderId, "PRODUCT_ID", productId];
+			queryString = mysql.format(queryString, tableValues);
+			connection.query(queryString, (err, rows) => {
+				if(err) {
+					reject({
+						"message": "err in query execution",
+						err 
+					});
+				}
+				resolve(rows);
+			});
+		});
+	},
+
+	getAllCartItems: function(orderId) {
+		return new Promise((resolve, reject) => {
+			//grab all the product details for the current order
+			let queryString = "SELECT TP.PRODUCT_NAME, TP.PRODUCT_DESCRIPTION, TP.PRODUCT_PRICE, TOD.QUANTITY, TP.PRODUCT_PRICE\
+								FROM TB_ORDER_DETAILS TOD\
+								INNER JOIN tb_product TP\
+								ON TP.ID = TOD.PRODUCT_ID\
+								WHERE TOD.ORDER_ID = ?";
+			let tableValues = [orderId];
+			queryString = mysql.format(queryString, tableValues);
+			connection.query(queryString, (err, rows) => {
+				console.log(rows);
+				if(err) {
+					reject({
+						"message" : "error in query execution",
+						err
+					});
+				}
+				resolve(rows);
+			});
+		});
+	},
+
+	addOrder: function(userId, orderDate, orderAmount, isPlaced) {
+		return new Promise((resolve, reject) => {
+			let queryString = "INSERT INTO ?? (`USER_ID`,`ORDER_DATE`,`ORDER_AMOUNT`,`ORDER_PLACED`) VALUES (?,?,?,?)";
+			let tableValues = ["TB_ORDER", userId, orderDate, orderAmount, isPlaced];
+			queryString = mysql.format(queryString, tableValues);
+			connection.query(queryString, (err, rows) => {
+				if(err) {
+					reject({"message": "err in query execution"});
+				}
+				resolve(rows);
+			});
+		});
+	},
+
+	addOrderDetails: function(orderId, productId, quantity, price) {
+		return new Promise((resolve, reject) => {
+			console.log('Hi');
+			let queryString = "INSERT INTO ?? (`ORDER_ID`,`PRODUCT_ID`,`QUANTITY`,`PRICE`) VALUES(?,?,?,?)";
+			let tableValues = ["TB_ORDER_DETAILS", orderId, productId, quantity, price];
+			queryString = mysql.format(queryString, tableValues);
+			connection.query(queryString, (err, rows) => {
+				if(err) {
+					reject({
+						"message" : "err in query execution"
+					});
+				}
+				resolve(rows);
+			});
+		});
+	},
+
 	addProductsToCart: function(productId, userId, quantity, price) {
 		return new Promise((resolve, reject) => {
 			let queryString = "SELECT COUNT(user_id) FROM ?? WHERE ? = ??; ";

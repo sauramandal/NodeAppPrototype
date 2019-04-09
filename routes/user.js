@@ -12,7 +12,8 @@ const {dashboard} = require('../routes/index');
 
 var addNewUserTemplate = (req, res) => {
     res.render('users/signup.ejs', {
-        title: 'User SignUp Page'
+        title: 'User SignUp Page',
+        message: ''
     });
 };
 var addNewUser = async(req, res) => {
@@ -42,8 +43,13 @@ var addNewUser = async(req, res) => {
         }
         else {
             let addUser = await UserService.addUser(post);
+            //create a token
+            var token = jwt.sign({id: addUser.user_id}, config.secret, {
+                expiresIn: 86400
+            });
             return res.json({
                 message: "user signed up successfully",
+                token,
                 error: false
             });
         }
@@ -70,7 +76,30 @@ var userLoginCheck = async(req, res) => {
         console.log(isUserExisted);
         if(isUserExisted.length) {
             var loggedIn = await UserService.userLogIn(isUserExisted);
-            dashboard(req, res);
+            jwt.verify(loggedIn.token, config.secret, function(err, decoded) {
+                if(err)
+                    return res.status(500).send({auth: false, message: 'Failed to authenticate token'});
+                //save to request
+                req.userId = decoded.rows[0].user_id;
+            });
+            console.log(loggedIn.token);
+            req.headers.authorization = "Bearer" + " " + loggedIn.token;
+            const bearerHeader = req.headers['authorization'];
+            console.log(typeof bearerHeader);
+            if(typeof bearerHeader !== 'undefined') {
+                const bearer = bearerHeader.split(" ");
+                const bearerToken = bearer[1];
+                req.token = bearerToken;
+                console.log(req.token);
+                //next();
+                dashboard(req, res);
+            } else {
+                res.render('users/signup.ejs',{
+                    title: 'Welcome to SignUp/Login page',
+                    message: ''
+                });
+            }
+            //dashboard(req, res);
             // return res.json({
             //     "message": "logged in successfully", 
             //     "error": false, 
@@ -83,9 +112,9 @@ var userLoginCheck = async(req, res) => {
             //     getTopTenProducts
             // }); 
         } else {
-            return res.json({
-                "message": "no user exists", 
-                "error": true
+            return res.render('users/signup.ejs',{
+                title: 'Welcome to SignUp/Login page',
+                message: 'Check email and password'
             });
         }
     } catch(err) {
