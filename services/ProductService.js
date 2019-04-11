@@ -9,7 +9,7 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 			var queryString = "INSERT INTO ?? (`product_name`,`product_description`,`product_price`,`product_image`,\
 								`created_at`,`company_id`,`category_id`) VALUES (?,?,?,?,?,?,?)";
-			var table = ["TB_PRODUCT"];
+			var table = ["tb_product"];
 			var productObject = [ 
 				product.product_name,
 				product.product_description,
@@ -39,7 +39,7 @@ module.exports = {
 		console.log('Hi');
 		return new Promise((resolve, reject) => {
 			let queryString = "SELECT id, company_name FROM ??";
-			let table = ["TB_COMPANY"];
+			let table = ["tb_company"];
 			queryString = mysql.format(queryString, table);
 	
 			connection.query(queryString, (err, rows) => {
@@ -55,7 +55,7 @@ module.exports = {
 	getCategories: function() {
 		return new Promise((resolve, reject) => {
 			let queryString = "SELECT id, CATEGORY_NAME FROM ??";
-			let table = ["TB_CATEGORY"];
+			let table = ["tb_category"];
 			queryString = mysql.format(queryString, table);
 			connection.query(queryString, (err, rows) => {
 				if(err) {
@@ -70,7 +70,7 @@ module.exports = {
 	editProduct: function(productId) {
 		return new Promise((resolve, reject) => {
 			let queryString = "SELECT * FROM ?? WHERE id = ?";
-			let table = ["TB_PRODUCT"];
+			let table = ["tn_product"];
 			queryString = mysql.format(queryString, table);
 			connection.query(queryString, productId, (err, rows) => {
 				if(err) {
@@ -91,7 +91,7 @@ module.exports = {
 	showProduct: function(productId) {
 		return new Promise((resolve, reject) => {
 			let queryString = "SELECT * FROM ?? WHERE id = ?";
-			let table = ["TB_PRODUCT"];
+			let table = ["tb_product"];
 			queryString = mysql.format(queryString, table);
 			connection.query(queryString, productId, (err, rows, fields) => {
 				if(err) {
@@ -105,7 +105,7 @@ module.exports = {
 	getOrderId: function(userId) {
 		return new Promise((resolve, reject) => {
 			let queryString = "SELECT ID FROM ?? WHERE ?? = ? AND ?? = ?";
-			let tableValues = ["TB_ORDER", "USER_ID", userId, "ORDER_PLACED", 0];
+			let tableValues = ["tb_order", "USER_ID", userId, "ORDER_PLACED", 0];
 			queryString = mysql.format(queryString, tableValues);
 			connection.query(queryString, (err, rows) => {
 				if(err) {
@@ -177,7 +177,7 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 			console.log('Hi');
 			let queryString = "INSERT INTO ?? (`ORDER_ID`,`PRODUCT_ID`,`QUANTITY`,`PRICE`) VALUES(?,?,?,?)";
-			let tableValues = ["TB_ORDER_DETAILS", orderId, productId, quantity, price];
+			let tableValues = ["tb_order_details", orderId, productId, quantity, price];
 			queryString = mysql.format(queryString, tableValues);
 			connection.query(queryString, (err, rows) => {
 				if(err) {

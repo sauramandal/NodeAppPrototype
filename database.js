@@ -1,9 +1,10 @@
 const mysql = require('mysql');
 const config = require('./config');
+const Sequelize = require('sequelize');
 
 var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
+  host: 'db4free.net',
+  user: 'pritimaysaura',
   password: config.dbPassword,
   database: config.databaseName,
   debug: true
@@ -15,5 +16,13 @@ connection.connect((err) => {
   console.log('Connected successfully to mysql server');
 });
 
-module.exports = {connection};
+const sequelize = new Sequelize({
+  host: config.host,
+  database: config.databaseName,
+  username: config.username,
+  password: config.password,
+  dialect: 'mysql'
+});
+
+module.exports = {connection, sequelize};
 // module.exports = {};

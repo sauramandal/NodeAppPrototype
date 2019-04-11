@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +20,11 @@
     "jsonwebtoken": "^8.4.0",
     "md5": "^2.2.1",
     "mysql": "^2.16.0",
-    "path": "^0.12.7"
+    "mysql2": "^1.6.5",
+    "path": "^0.12.7",
+    "sequelize": "^5.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11"
   }
 }

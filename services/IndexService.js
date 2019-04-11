@@ -8,7 +8,7 @@ module.exports = {
     getTopTenSoldProducts: function() {
         return new Promise((resolve, reject) => {
             var queryString = "SELECT * FROM ?? LIMIT 10";
-            var values = ["TB_PRODUCT"];
+            var values = ["tb_product"];
             connection.query(queryString, values, (err, rows, fields) => {
                 if(err)
                     return reject(new Error(""));
@@ -20,7 +20,7 @@ module.exports = {
     getRandomizedProducts: function() {
         return new Promise((resolve, reject) => {
             var queryString = "SELECT * FROM ?? LIMIT 5";
-            var values = ["TB_PRODUCT"];
+            var values = ["tb_product"];
             connection.query(queryString, values, (err, rows, fields) => {
                 if(err)
                     return reject(new Error(""));
