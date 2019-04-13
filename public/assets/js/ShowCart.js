@@ -3,9 +3,32 @@ var check = false;
 
 function changeVal(el) {
     var qt = parseFloat(el.parent().children(".qt").html());
-    var price = parseFloat(el.parent().children(".full-price").html());
-    var eq = Math.round(price * qt * 100) / 100;
-    changeTotal();			
+    var perproductprice = parseFloat(el.parent().children(".perproductprice").html());
+    var volumePrice = qt * perproductprice;
+    var subtotal = parseFloat($(".subtotal span").html());
+
+    if (qt === 0) {
+        return;
+    } 
+
+    if (el.html() === '+') {
+        subtotal += perproductprice;
+    } else {
+        subtotal -= perproductprice;
+    }
+    
+    var tax = Math.round(subtotal * 0.05 * 100) / 100;
+    var shipping = parseFloat($(".shipping span").html());
+    var totalAmount = Math.round((subtotal + tax + shipping) *100) / 100;
+
+    if(subtotal == 0) {
+        totalAmount = 0;
+    }
+
+    $(el.parent().children(".full-price")).html(volumePrice);
+    $(".subtotal span").html(subtotal);
+    $(".tax span").html(tax);
+    $(".total span").html(totalAmount);
 }
 
 function changeTotal() {
@@ -72,6 +95,9 @@ $(document).ready(function(){
     $(".qt-minus").click(function(){
         
         child = $(this).parent().children(".qt");
+        if (parseInt(child.html()) === 1) {
+            return;
+        }
         
         if(parseInt(child.html()) > 1) {
         child.html(parseInt(child.html()) - 1);
