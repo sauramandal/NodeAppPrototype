@@ -162,7 +162,7 @@ module.exports = {
 	addOrder: function(userId, orderDate, orderAmount, isPlaced) {
 		return new Promise((resolve, reject) => {
 			let queryString = "INSERT INTO ?? (`USER_ID`,`ORDER_DATE`,`ORDER_AMOUNT`,`ORDER_PLACED`) VALUES (?,?,?,?)";
-			let tableValues = ["TB_ORDER", userId, orderDate, orderAmount, isPlaced];
+			let tableValues = ["tb_order", userId, orderDate, orderAmount, isPlaced];
 			queryString = mysql.format(queryString, tableValues);
 			connection.query(queryString, (err, rows) => {
 				if(err) {
