@@ -46,6 +46,8 @@ app.use('/products', require('./routes/product'));
 //Custom Routes for Companies
 app.use('/companies', require('./routes/company'));
 
+app.use('/orders', require('./routes/order'));
+
 app.listen(port, function() {
     console.log(`Express server started on port: ${port}`);
 });

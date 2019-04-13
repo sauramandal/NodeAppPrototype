@@ -39,7 +39,7 @@ module.exports = {
 		console.log('Hi');
 		return new Promise((resolve, reject) => {
 			let queryString = "SELECT id, company_name FROM ??";
-			let table = ["TB_COMPANY"];
+			let table = ["tb_company"];
 			queryString = mysql.format(queryString, table);
 	
 			connection.query(queryString, (err, rows) => {
@@ -55,7 +55,7 @@ module.exports = {
 	getCategories: function() {
 		return new Promise((resolve, reject) => {
 			let queryString = "SELECT id, CATEGORY_NAME FROM ??";
-			let table = ["TB_CATEGORY"];
+			let table = ["tb_category"];
 			queryString = mysql.format(queryString, table);
 			connection.query(queryString, (err, rows) => {
 				if(err) {
@@ -177,7 +177,7 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 			console.log('Hi');
 			let queryString = "INSERT INTO ?? (`ORDER_ID`,`PRODUCT_ID`,`QUANTITY`,`PRICE`) VALUES(?,?,?,?)";
-			let tableValues = ["TB_ORDER_DETAILS", orderId, productId, quantity, price];
+			let tableValues = ["tb_order_details", orderId, productId, quantity, price];
 			queryString = mysql.format(queryString, tableValues);
 			connection.query(queryString, (err, rows) => {
 				if(err) {
