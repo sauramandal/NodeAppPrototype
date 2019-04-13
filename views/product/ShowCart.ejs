@@ -164,6 +164,8 @@
                     <div class="content">
                         <h1>Product Description</h1>
                         <%= cartItems[i].PRODUCT_DESCRIPTION %>
+
+                        <div><%= cartItems[i].PRODUCT_PRICE %></div>
                     </div>
     
                     <footer class="content">
@@ -171,8 +173,9 @@
                         <span class="qt"><%= cartItems[i].QUANTITY %></span>
                         <span class="qt-plus">+</span>
                                               
-                        <h2 class="full-price">
-                            <%= cartItems[i].PRODUCT_PRICE %>
+                        <div class="perproductprice" hidden><%= cartItems[i].PRODUCT_PRICE %></div>
+                        <h2 class="full-price" id="productPrice">
+                            <%= cartItems[i].QUANTITY * cartItems[i].PRODUCT_PRICE %>
                         </h2>
                         <h2 class="price" style="font-size: 26pt;">
                             ₹

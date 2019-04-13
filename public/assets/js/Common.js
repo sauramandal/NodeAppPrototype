@@ -2,6 +2,6 @@
 $(document).ready(function() {
     $('#AddToCart').click(function(event) {
         event.preventDefault();
-        console.log('Hi');
+        console.log('Addtocart');
     });
 });
