@@ -3,11 +3,8 @@ var check = false;
 
 function changeVal(el) {
     var qt = parseFloat(el.parent().children(".qt").html());
-    var price = parseFloat(el.parent().children(".price").html());
+    var price = parseFloat(el.parent().children(".full-price").html());
     var eq = Math.round(price * qt * 100) / 100;
-
-    el.parent().children(".full-price").html( eq + "€" );
-
     changeTotal();			
 }
 
@@ -33,6 +30,17 @@ function changeTotal() {
 }
 
 $(document).ready(function(){
+    //calculate sub total price
+    var subTotalPrice = 0.0;
+    var priceList = $('.full-price');
+    for(var i=0;i<priceList.length; i++) {
+        subTotalPrice = subTotalPrice + parseFloat(priceList[i].innerText);
+    }
+    $(".subtotal span").html(subTotalPrice);
+    const taxes = Math.round(0.05 * subTotalPrice * 100)/100;
+    const shippingCost = 5;
+    var fullPrice = Math.round((subTotalPrice + taxes + shippingCost)*100)/100;
+    $(".total span").html(fullPrice);
     $(".remove").click(function(){
         var el = $(this);
         el.parent().parent().addClass("removed");

@@ -27,6 +27,8 @@
     "sequelize-auto": "^0.4.29"
   },
   "devDependencies": {
-    "nodemon": "^1.18.11"
+    "nodemon": "^1.18.11",
+    "node-localstorage": "^1.3.1",
+    "path": "^0.12.7"
   }
 }

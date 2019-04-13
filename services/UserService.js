@@ -54,10 +54,7 @@ module.exports = {
               "message": "Error in executing sql"
             });
           }
-
-          resolve({
-            rows
-          });
+          resolve(rows);
 
       });
     });
@@ -134,7 +131,7 @@ module.exports = {
   showAllUsers: function() {
     return new Promise((resolve, reject) => {
       var queryString = "SELECT * FROM ?? LIMIT 100"; //show 100 users
-      var values = ["USER"];
+      var values = ["user"];
       queryString = mysql.format(queryString, values);
       connection.query(queryString, (err, rows) => {
         if(err) {
@@ -175,7 +172,7 @@ module.exports = {
                         `dob` = ?, `phone_number` = ?,`device_type` = ?,`latitude` = ?,\
                         `longitude` = ?, `is_verified` = ?, `block_status` = ? WHERE user_id = ?";
           
-      var table = ["USER"];
+      var table = ["user"];
       queryString = mysql.format(queryString, table);
       console.log(queryString);
       

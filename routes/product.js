@@ -202,4 +202,27 @@ router.get('/addToCart', ensureToken, async(req, res) => {
 	}
 });
 
+router.get('/showCartItems', ensureToken, async(req, res) => {
+	//console.log(req.userId);
+	//get current user's cart items
+	try {
+		var userId = req.userId;
+		var currentOrderId = await ProductService.getOrderId(req.userId);
+		var orderId = currentOrderId[0].ID;
+		var showCartItems = await ProductService.getAllCartItems(orderId);
+		//get user data
+		var userData = await UserService.showUserData(userId);
+		return res.render('product/ShowCart.ejs', {
+			cartItems: showCartItems,
+			userData
+		});
+	} catch(e) {
+		return res.json({
+			"message": "An exception occurred",
+			"details": e
+		});
+	}
+	
+});
+
 module.exports = router;
