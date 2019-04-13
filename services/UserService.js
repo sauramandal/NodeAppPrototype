@@ -43,7 +43,7 @@ module.exports = {
       //Insert new user
       var queryString = "INSERT INTO ?? (`first_name`, `last_name`, `dob`, `device_type`, `latitude`,`longitude`, `email`, `password`, \
                         `phone_number`,`is_verified`,`block_status`)  \
-                        values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+                        values (?, ?, str_to_date(?,'%m-%d-%Y'), ?, ?, ?, ?, ?, ?, ?, ?) ";
       var table = ["user"];
       queryString = mysql.format(queryString, table);
       connection.query(queryString, userObject, (err, rows) => {

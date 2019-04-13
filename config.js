@@ -4,7 +4,7 @@ module.exports = {
     user: 'pritimaysaura',
     dbPassword: 'daddydidadeadlydeed',
     databaseName: 'shopping_schema',
-    // squlizee
+    // orm
     host: 'db4free.net',
     username: 'pritimaysaura',
     password: 'daddydidadeadlydeed',

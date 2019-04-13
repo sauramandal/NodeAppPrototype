@@ -15,7 +15,8 @@ $(document).ready(function() {
         minDate: new Date('1900-01-01'),
         maxDate: new Date(),
         changeMonth: true,
-        changeYear: true
+        changeYear: true,
+        dateFormat: 'dd-mm-yy'
     });
 
     $('#LoginForm').validate({
