@@ -9,7 +9,7 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 			var queryString = "INSERT INTO ?? (`product_name`,`product_description`,`product_price`,`product_image`,\
 								`created_at`,`company_id`,`category_id`) VALUES (?,?,?,?,?,?,?)";
-			var table = ["TB_PRODUCT"];
+			var table = ["tb_product"];
 			var productObject = [ 
 				product.product_name,
 				product.product_description,
@@ -70,7 +70,7 @@ module.exports = {
 	editProduct: function(productId) {
 		return new Promise((resolve, reject) => {
 			let queryString = "SELECT * FROM ?? WHERE id = ?";
-			let table = ["TB_PRODUCT"];
+			let table = ["tb_product"];
 			queryString = mysql.format(queryString, table);
 			connection.query(queryString, productId, (err, rows) => {
 				if(err) {
@@ -91,7 +91,7 @@ module.exports = {
 	showProduct: function(productId) {
 		return new Promise((resolve, reject) => {
 			let queryString = "SELECT * FROM ?? WHERE id = ?";
-			let table = ["TB_PRODUCT"];
+			let table = ["tb_product"];
 			queryString = mysql.format(queryString, table);
 			connection.query(queryString, productId, (err, rows, fields) => {
 				if(err) {
@@ -105,7 +105,7 @@ module.exports = {
 	getOrderId: function(userId) {
 		return new Promise((resolve, reject) => {
 			let queryString = "SELECT ID FROM ?? WHERE ?? = ? AND ?? = ?";
-			let tableValues = ["TB_ORDER", "USER_ID", userId, "ORDER_PLACED", 0];
+			let tableValues = ["tb_order", "USER_ID", userId, "ORDER_PLACED", 0];
 			queryString = mysql.format(queryString, tableValues);
 			connection.query(queryString, (err, rows) => {
 				if(err) {
@@ -122,7 +122,7 @@ module.exports = {
 	checkExistingProductOrder: function(orderId, productId) {
 		return new Promise((resolve, reject) => {
 			let queryString = "SELECT COUNT(?) FROM ?? WHERE ?? = ? AND ?? = ?";
-			let tableValues = ["id", "TB_ORDER_DETAILS", "ORDER_ID", orderId, "PRODUCT_ID", productId];
+			let tableValues = ["id", "tb_order_details", "ORDER_ID", orderId, "PRODUCT_ID", productId];
 			queryString = mysql.format(queryString, tableValues);
 			connection.query(queryString, (err, rows) => {
 				if(err) {
@@ -139,8 +139,8 @@ module.exports = {
 	getAllCartItems: function(orderId) {
 		return new Promise((resolve, reject) => {
 			//grab all the product details for the current order
-			let queryString = "SELECT TP.PRODUCT_NAME, TP.PRODUCT_DESCRIPTION, TP.PRODUCT_PRICE, TOD.QUANTITY, TP.PRODUCT_PRICE\
-								FROM TB_ORDER_DETAILS TOD\
+			let queryString = "SELECT TP.PRODUCT_NAME, TP.PRODUCT_DESCRIPTION, TP.PRODUCT_PRICE, TOD.QUANTITY, TP.PRODUCT_PRICE, TP.PRODUCT_IMAGE\
+								FROM tb_order_details TOD\
 								INNER JOIN tb_product TP\
 								ON TP.ID = TOD.PRODUCT_ID\
 								WHERE TOD.ORDER_ID = ?";

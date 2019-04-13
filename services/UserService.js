@@ -8,7 +8,7 @@ module.exports = {
   checkUser: function(email) {
     return new Promise((resolve, reject) => {
       var queryString = "SELECT email FROM ?? WHERE ?? = ?";
-      var table = ["USER", "email", email];
+      var table = ["user", "email", email];
       queryString = mysql.format(queryString, table);
       connection.query(queryString, (err, rows) => {
         if (err)  {
@@ -44,7 +44,7 @@ module.exports = {
       var queryString = "INSERT INTO ?? (`first_name`, `last_name`, `dob`, `device_type`, `latitude`,`longitude`, `email`, `password`, \
                         `phone_number`,`is_verified`,`block_status`)  \
                         values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
-      var table = ["USER"];
+      var table = ["user"];
       queryString = mysql.format(queryString, table);
       connection.query(queryString, userObject, (err, rows) => {
           console.log("Hi");
@@ -54,10 +54,7 @@ module.exports = {
               "message": "Error in executing sql"
             });
           }
-
-          resolve({
-            rows
-          });
+          resolve(rows);
 
       });
     });
@@ -68,7 +65,7 @@ module.exports = {
     //return a new promise object
     return new Promise((resolve, reject) => {
       var queryString = "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?";
-      var tableValues = ["USER", "password", md5(post.password), "email", post.email];
+      var tableValues = ["user", "password", md5(post.password), "email", post.email];
       queryString = mysql.format(queryString, tableValues);
       connection.query(queryString, (err, rows) => {
         if(err){
@@ -134,7 +131,7 @@ module.exports = {
   showAllUsers: function() {
     return new Promise((resolve, reject) => {
       var queryString = "SELECT * FROM ?? LIMIT 100"; //show 100 users
-      var values = ["USER"];
+      var values = ["user"];
       queryString = mysql.format(queryString, values);
       connection.query(queryString, (err, rows) => {
         if(err) {
@@ -175,7 +172,7 @@ module.exports = {
                         `dob` = ?, `phone_number` = ?,`device_type` = ?,`latitude` = ?,\
                         `longitude` = ?, `is_verified` = ?, `block_status` = ? WHERE user_id = ?";
           
-      var table = ["USER"];
+      var table = ["user"];
       queryString = mysql.format(queryString, table);
       console.log(queryString);
       

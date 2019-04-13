@@ -2,10 +2,10 @@ const mysql = require('mysql');
 const config = require('./config');
 
 var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: config.dbPassword,
-  database: config.databaseName,
+  host: 'db4free.net',
+  user: 'pritimaysaura',
+  password: 'daddydidadeadlydeed',
+  database: 'shopping_schema',
   debug: true
 });
 

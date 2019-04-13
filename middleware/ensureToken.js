@@ -3,13 +3,16 @@ const config = require('../config');
 
 var ensureToken = function(req, res, next) {
     console.log(req.cookies.token);
+
     var token = req.headers['x-access-token'] || req.headers['authorization'] || req.cookies.token;
     if(!token)
-        return res.status(403).send({ auth: false, message: 'No token provided'});
+        return res.redirect('/signup');
     //verify secret
     jwt.verify(token, config.secret, function(err, decoded) {
-        if(err)
-            return res.status(500).send({auth: false, message: 'Failed to authenticate token'});
+        if(err) {
+            return res.redirect('/signup');
+        }
+            // return res.status(500).send({auth: false, message: 'Failed to authenticate token'});
         //save to request
         //console.log(decoded.rows[0].first_name);
         req.userId = decoded.rows[0].user_id;

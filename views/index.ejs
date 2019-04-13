@@ -17,7 +17,7 @@
             var t = '<%- token %>';
             localStorage.setItem("Token", t);
             document.cookie = 'token='+t;
-        </script></a></li>
+        </script>
     </head>
     <body>
         <div class="container-header">
@@ -29,7 +29,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">MegaMenu</a>
+                    <a class="navbar-brand" href="#">Shoppify</a>
                 </div>
             
             
@@ -133,7 +133,7 @@
                             <%= 'Anonymous' %>
                         <% } %>
                     </a></li>
-                    <li><a href="#">Dump</a></li>
+                    <li><a id="AddToCart" href="#">Cart Items</a></li>
                         
                     <li><a href="#">Something else here</a></li>
                     <li class="divider"></li>
@@ -238,5 +238,6 @@
             </div>
         </div>
     </div>
+    <script type="text/javscript" src="../public/assets/js/Common.js"></script>
 </body> 
 
