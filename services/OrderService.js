@@ -1,15 +1,12 @@
-const {sequelize} = require('./../database');
+const {db}  = require('./../db');
 
-
-module.exports = {
-    getOrders: function() {
-        return new Promise((resolve, reject) => {
-            sequelize.query("SELECT * FROM tb_order").then(result => {
-                console.log(result);
-                resolve({
-                    result
-                  });
-              });
-        });
-      },
+exports.allOrders = (req, res) => {
+  db.tb_order.findAll()
+    .then(users => {
+      res.json(users);
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(404).send(error);
+    })
 }
