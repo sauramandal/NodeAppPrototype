@@ -65,9 +65,9 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: '0'
     },
     roles: {
-      type: "BIT(2)",
+      type: DataTypes.INTEGER(1),
       allowNull: false,
-      defaultValue: 'b\'0\''
+      defaultValue: '0'
     }
   }, {
     tableName: 'user'
