@@ -1,7 +1,8 @@
 const router = require('express').Router();
-const OrderService = require('../services/OrderService');
+const OrderController = require('../controllers/OrderController');
 
-router.get('/orders', OrderService.allOrders);
+// router.get('/orders', OrderService.allOrders);
+router.get('/showAllOrders', OrderController.getAllOrders);
 //viewing my todays orders
-router.get('/:id/showTodaysOrder', OrderService.getTodayOrdersForCurrentUser);
+router.get('/:id/showTodaysOrder', OrderController.getTodaysOrder);
 module.exports = router;

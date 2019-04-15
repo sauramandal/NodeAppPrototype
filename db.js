@@ -13,8 +13,23 @@ const sequelize = new Sequelize({
     dialect: 'mysql',
     define: {
       timestamps: false
+    },
+    pool: {
+      max: 100,
+      min: 0,
+      idle: 200000,
+      acquire: 1000000
     }
   });
+
+  sequelize
+    .authenticate()
+    .then(() => {
+      console.log('Connection has been established successfully.');
+    })
+    .catch(err => {
+      console.error('Unable to connect to the database:', err);
+    });
   
   
   fs

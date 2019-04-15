@@ -12,29 +12,32 @@ exports.allOrders = (req, res) => {
     })
 }
 
-exports.getTodayOrdersForCurrentUser = (req, res) => {
-  let userId = req.params.id;
-  let today = new Date().toISOString().split('T')[0];
-  sequelize.query('SELECT TP.product_name, TP.product_price, TOD.QUANTITY\
-                  FROM tb_order TORD\
-                  INNER JOIN tb_order_details TOD \
-                  ON TORD.ID = TOD.ORDER_ID\
-                  INNER JOIN tb_product TP ON TP.id = TOD.PRODUCT_ID\
-                  WHERE TORD.USER_ID = :usersId AND TORD.ORDER_DATE = :todaysDate', 
-                  { 
-                    replacements: 
-                    {
-                      usersId: userId,
-                      todaysDate: today
-                    }, 
-                    type: sequelize.QueryTypes.SELECT 
-                  }
-  )
-  .then(orders => {
-    res.json(orders);
-  })
-  .catch(error => {
-    console.log(error);
-    res.status(404).send(error);
-  }); 
+exports.getAllOrders = async(req, res) => {
+  try {
+    return await db.tb_order.findAll({ limit: 10 });
+  } catch(err) {
+    throw new Error(err);
+  }
+}
+
+exports.getTodayOrdersForCurrentUser = async (userId, date) => {
+  let sql = 'SELECT TP.product_name, TP.product_price, TOD.QUANTITY\
+  FROM tb_order TORD\
+  INNER JOIN tb_order_details TOD \
+  ON TORD.ID = TOD.ORDER_ID\
+  INNER JOIN tb_product TP ON TP.id = TOD.PRODUCT_ID\
+  WHERE TORD.USER_ID = :usersId AND TORD.ORDER_DATE = :todaysDate';
+  let params = { 
+    replacements: 
+    {
+      usersId: userId,
+      todaysDate: date
+    }, 
+    type: sequelize.QueryTypes.SELECT 
+  };
+  try {
+    return await sequelize.query(sql, params);
+  } catch(err) {
+    throw err;
+  }
 }
