@@ -6,7 +6,7 @@ const config = require('./../config');
 
 router.get('/new', (req, res) => {
   var queryString = "SELECT nicename FROM ??";          
-  var table = ["TB_COUNTRY"];
+  var table = ["tb_country"];
   queryString = mysql.format(queryString, table);
   connection.query(queryString, (err, rows) => {
     if(err) {
@@ -104,7 +104,7 @@ router.post('/getCompanyList', (req, res) => {
                       phone AS D_PHONE, \
                       country AS E_COUNTRY \
                     FROM ??";
-  var tableValues = ["TB_COMPANY"];
+  var tableValues = ["tb_company"];
   queryString = mysql.format(queryString, tableValues);
   connection.query(queryString, (err, rows) => {
     if(err)
@@ -138,7 +138,7 @@ router.get('/editCompanyDetails', (req, res) => {
   //console.log(req.query.mode);
   let regId = req.query.regId;
   var queryString = "SELECT id, company_name, city, phone, country FROM ?? WHERE id = ?";
-  var tableValues = ["TB_COMPANY"];
+  var tableValues = ["tb_company"];
   queryString = mysql.format(queryString, regId, tableValues);
   console.log(queryString);
   connection.query(queryString, (err, rows) => {

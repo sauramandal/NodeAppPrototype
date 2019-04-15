@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<head>
+<% include ../partials/adminheader %>
     <script src="/public/assets/plugins/jquery.min.js"></script>
     <script type="text/javascript" src="/public/assets/bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/public/assets/bootstrap/css/bootstrap.min.css">
@@ -8,13 +7,17 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
-</head>
-<body>
-    <div class="row justify-content-center">
+    <style>
+        * {
+            font-size: 14px;
+        }
+    </style>
+    
+    <section id="contents">
+    <div class="row justify-content-center" style="height: 0%">
             <div class="col-md-6">
             <div class="card">
             <header class="card-header">
-                <a href="" class="float-right btn btn-outline-primary mt-1">Log in</a>
                 <h4 class="card-title mt-2">Add Company</h4>
             </header>
             <article class="card-body">
@@ -146,5 +149,7 @@
                                 
                 
     <script type="text/javascript" src="/public/assets/js/AddCompany.js"></script>
+    <script type="text/javascript" src="/public/assets/js/adminDashboard.js"></script>
+    </section>
 </body>
 </html>

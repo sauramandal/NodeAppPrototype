@@ -24,6 +24,7 @@
     transition: .3s;
     margin-left: 290px;
     background-color: #2a2b3d;
+    font-size: 12px;
   }
   .margin {
     margin-left: 0 !important;
