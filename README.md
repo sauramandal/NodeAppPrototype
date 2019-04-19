@@ -4,7 +4,7 @@ npm run dev
 ```
 ### Create models
 ```
-sequelize-auto -o "./models" -d shopping_schema -h db4free.net -u pritimaysaura -p 5432 -x daddydidadeadlydeed -e mysql
+sequelize-auto -o "./models" -d shopping_schema -h db4free.net -u pritimaysaura -x daddydidadeadlydeed -e mysql
 ```
 
 ### Deployed
