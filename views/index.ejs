@@ -236,6 +236,29 @@
                     <button class="btn btn-info rightLst">></button>
                 </div>
             </div>
+
+            <!-- Phones -->
+            <div class="row">
+                <div class="MultiCarousel" data-items="1,3,5,6" data-slide="1" id="MultiCarousel"  data-interval="1000">
+                    <div class="MultiCarousel-inner">
+                        <% for(var i=0; i<getTopPhones.length; i++) { %>
+                            <div class="item">
+                                <div class="pad15">
+                                    <p class="lead"></p>
+                                    <h4><strong><%= getTopPhones[i].product_name %></strong></h4>
+                                    <a href="products/<%= getTopPhones[i].id %>/show">
+                                        <img src="/public/assets/images/<%= getTopPhones[i].product_image %>" class="img-responsive" style="height: 250px; width: 60%; position: relative; left: 20%;" alt="">
+                                    </a>
+                                    <h3>₹ <%= getTopPhones[i].product_price %></h3>
+                                    <p>20% off</p>
+                                </div>            
+                            </div>
+                        <% } %>                        
+                    </div>
+                    <button class="btn btn-info leftLst"><</button>
+                    <button class="btn btn-info rightLst">></button>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-12 text-center">
                     <br/><br/><br/>

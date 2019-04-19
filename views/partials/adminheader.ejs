@@ -57,15 +57,17 @@
             <li><a href="#">ipsum dolor sit</a></li>
           </ul>
         </li>
-        <p>Example:</p>
+        
         <li><i class="fa fa-envelope-open-o fa-fw"></i><a href="#"> Messages <span class="num dang">56</span></a></li>
         <li><i class="fa fa-wrench fa-fw"></i><a href="#"> Settings <span class="num prim">6</span></a>
           <ul class="side-nav-dropdown">
-            <li><a href="#">Lorem ipsum</a></li>
-            <li><a href="#">ipsum dolor</a></li>
-            <li><a href="#">dolor ipsum</a></li>
-            <li><a href="#">amet consectetur</a></li>
-            <li><a href="#">ipsum dolor sit</a></li>
+            <li><a id="LogoutButton" href="/">Logout</a>
+              <script>
+                  $('#LogoutButton').on('click', function(e) {
+                      document.cookie = "token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+                  });    
+              </script>
+            </li>
           </ul>
         </li>
         

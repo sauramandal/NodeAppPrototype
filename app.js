@@ -27,8 +27,8 @@ app.use(cookieParser());
 app.use('/public', express.static(__dirname + '/public'));
 app.use(fileUpload());
 
-//Custom Routes for Products
 
+app.get('/', addNewUserTemplate);
 // Custom Routes for User
 app.get('/index', ensureToken, dashboard);
 app.get('/signup', addNewUserTemplate);
@@ -39,7 +39,7 @@ app.post('/:id/editUser',signUpValidation, editUser);
 // app.get('/privateRoute', ensureToken, myProtectedRoute);
 
 app.use('/users', require('./routes/user1'));
-app.use('/products', require('./routes/product'));
+app.use('/products', require('./routes/product')); //Custom Routes for Products
 //   /users/all
 
 

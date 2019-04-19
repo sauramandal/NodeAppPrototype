@@ -19,14 +19,17 @@ var dashboard = async(req, res) => {
         console.log('got token');
         if(userId) {
             userLogInfo = await UserService.showUserData(userId);
-            let [ getRandomProducts, getTopTenProducts ] = await Promise.all([
+            let [ getRandomProducts, getTopTenProducts] = await Promise.all([
                 IndexService.getRandomizedProducts(),
                 IndexService.getTopTenSoldProducts()
             ]);
+            let getTopPhones = await IndexService.getTopMobiles();
+            console.log(getTopPhones);
             return res.render('index.ejs', {
                 title: 'Dashboard',
                 getRandomProducts,
                 getTopTenProducts,
+                getTopPhones,
                 userData: userLogInfo,
                 token: req.token
             });

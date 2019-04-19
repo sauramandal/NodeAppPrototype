@@ -27,5 +27,19 @@ module.exports = {
                 return resolve(rows);
             });
         });        
+    },
+
+    getTopMobiles: function() {
+        return new Promise((resolve, reject) => {
+            var queryString = "SELECT * FROM ?? ORDER BY created_at DESC";
+            var values = ["tb_product"];
+            
+            connection.query(queryString, values, (err, rows) => {
+                console.log(rows);
+                if(err)
+                    return reject(new Error("Error in query execution"));
+                return resolve(rows);
+            });
+        });
     }
 };

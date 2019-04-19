@@ -35,7 +35,7 @@ router.post('/new', (req, res) => {
   //console.log(req.body);
   //res.json(req.body);
   var queryString = "SELECT email FROM ?? WHERE ?? = ?";
-  var values = ["TB_COMPANY", "email", req.body.email];
+  var values = ["tb_company", "email", req.body.email];
   queryString = mysql.format(queryString, values);
   connection.query(queryString, (err, rows) => {
     if(err) {
@@ -60,7 +60,7 @@ router.post('/new', (req, res) => {
         let queryString = "INSERT INTO ?? (`address1`,`address2`,`city`,`company_name`,`confirm_password`,\
                           `password`,`country`,`email`,`phone`,`state`,`username`,`zip`) \
                           VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-        let table = ["TB_COMPANY"];
+        let table = ["tb_company"];
         console.log(companyObj);
 
         queryString = mysql.format(queryString, table);
