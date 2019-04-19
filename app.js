@@ -19,6 +19,8 @@ const {editCompanyDetails} = require('./routes/company');
 var app = express();
 var port = process.env.PORT || 8000;
 
+app.use(cors())
+
 //set up/configure express middlewares
 app.set('views', __dirname + '/views'); //set express to look in this directory to render views
 app.set('view engine', 'ejs'); //configure template engine
@@ -27,8 +29,6 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use('/public', express.static(__dirname + '/public'));
 app.use(fileUpload());
-
-app.options('*', cors())
 
 app.get('/', addNewUserTemplate);
 // Custom Routes for User
