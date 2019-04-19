@@ -64,11 +64,15 @@ module.exports = {
   userLoginCheckService: function(post) {
     //return a new promise object
     return new Promise((resolve, reject) => {
+      
       var queryString = "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?";
       var tableValues = ["user", "password", md5(post.password), "email", post.email];
       queryString = mysql.format(queryString, tableValues);
+      
       connection.query(queryString, (err, rows) => {
+        console.log(rows); console.log(post); console.log('Hii');
         if(err){
+          console.log(`hello`);
           return reject({
             "error": true,
             "message": "Error in executing sql"
