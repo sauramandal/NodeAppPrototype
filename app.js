@@ -7,7 +7,6 @@ const mysql = require('mysql');
 const fileUpload = require('express-fileupload');
 const jwt = require('jsonwebtoken');
 const config = require('./config');
-const cors = require('cors');
 
 const { signUpValidation, loginValidation } =  require('./utility/validation');
 const {ensureToken} = require('./middleware/ensureToken');
@@ -17,7 +16,7 @@ const {dashboard} = require('./routes/index');
 const {editCompanyDetails} = require('./routes/company');
 
 var app = express();
-var port = process.env.PORT || 8000;
+var port = process.env.PORT || 3000;
 
 //set up/configure express middlewares
 app.set('views', __dirname + '/views'); //set express to look in this directory to render views
@@ -28,7 +27,6 @@ app.use(cookieParser());
 app.use('/public', express.static(__dirname + '/public'));
 app.use(fileUpload());
 
-app.use(cors);
 
 app.get('/', addNewUserTemplate);
 // Custom Routes for User
