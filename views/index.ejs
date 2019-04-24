@@ -12,7 +12,6 @@
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <link href="../../public/assets/css/main.css" rel="stylesheet">
-        <script src="../../public/assets/js/dashboard.js"></script>
         <script>
             var t = '<%- token %>';
             localStorage.setItem("Token", t);
@@ -23,6 +22,8 @@
         <!-- If admin/seller layout -->
         <% if(userData[0].roles === 1) { %>
             <% include adminDashboard.ejs %>
+        <% } else if(userData[0].roles === 3){ %>
+            <% include sellerDashboard.ejs %>
         <% } else { %>
             <!-- end layout -->
             <div class="container-header">

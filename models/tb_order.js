@@ -27,6 +27,10 @@ module.exports = function(sequelize, DataTypes) {
     DELIVERY_ADDRESS: {
       type: DataTypes.STRING(256),
       allowNull: true
+    },
+    SHIPPER_ID: {
+      type: DataTypes.INTEGER(11),
+      allowNull: true
     }
   }, {
     tableName: 'tb_order'
