@@ -9,9 +9,7 @@ exports.addSellerPage = async function(req, res) {
 exports.addSeller = async function(req, res) {
     try {
         var email = req.body.email;
-        console.log(email);
         let isSellerExist = await SellerService.checkExistanceOfSeller(email);
-        console.log(isSellerExist.length);
         if(!isSellerExist.length) {
             var newSeller = {
                 firstName: req.body.firstName,

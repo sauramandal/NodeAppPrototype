@@ -1,13 +1,13 @@
 $(document).ready(function() {
     console.log('dom loaded');
-    $("#AddSeller").validator().on('submit', function(e) {
+    $("#AddShipper").validator().on('submit', function(e) {
       if(e.isDefaultPrevented()) {
         //handle invalid response
         console.log('error');
       } else {
         console.log('success');
         e.preventDefault();
-        var form = $('#AddSeller');
+        var form = $('#AddShipper');
         //submit form via ajax request
         $.ajax({
           method: 'POST',
@@ -23,7 +23,7 @@ $(document).ready(function() {
     //console.log(res);
     var companyDetails = JSON.parse(res);
     console.log(companyDetails);
-    var form = $('#AddSeller');
+    var form = $('#AddShipper');
     form[0].reset();
     var messageText = "";
     notification("Add Company Profile", messageText, "success", onRegisterClick);
@@ -48,5 +48,5 @@ $(document).ready(function() {
   };
   
   var resetForm = function() {
-    $('#AddSeller')[0].reset();
+    $('#AddShipper')[0].reset();
   };

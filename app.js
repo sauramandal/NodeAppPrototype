@@ -45,6 +45,9 @@ app.use('/products', require('./routes/product')); //Custom Routes for Products
 //Custom Routes for Sellers
 app.use('/sellers', require('./routes/seller'));
 
+//Custom Routes for Shippers
+app.use('/shippers', require('./routes/shipper'));
+
 //Custom Routes for Companies
 app.use('/companies', require('./routes/company'));
 
