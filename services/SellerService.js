@@ -1,51 +1,47 @@
-const {db}  = require('./../db');
-const sequelize = db.sequelize;
+const mysql = require('mysql');
+const {connection} = require('./../database');
+const md5 = require('md5');
+const jwt = require('jsonwebtoken');
+const config = require('./../config');
 
-exports.addNewSeller = async(req, res) => {
-    try {
-        var newSeller = {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            address: req.body.address,
-            pincode: req.body.pincode,
-            email: req.body.email,
-            mobileNumber: req.body.mobileNumber,
-            password: req.body.password,
-            confirmPassword: req.body.confirmPassword
-        };
-        var addedSeller;
-        //check for existing user
-        let sqlEmailCheck = 'SELECT Email FROM tb_seller WHERE Email = :userEmail';
-        let sqlEmailCheckParams = {
-            replacements: {
-                userEmail: req.body.email
+
+exports.checkExistanceOfSeller = (email) => {
+    
+    return new Promise((resolve, reject) => {
+        console.log(email);
+        let sqlEmailCheck = "SELECT Email FROM tb_seller WHERE Email = ?";
+        connection.query(sqlEmailCheck, [email], (err, rows, fields) => {
+            console.log(rows);
+            if(err) {
+                return reject(new Error(err));
             }
-        };
-        sequelize.query(sqlEmailCheck, sqlEmailCheckParams).then(([results, metadata]) => {
-            console.log(metadata);
-            
+            resolve(rows);
         });
-        let sql = 'INSERT INTO tb_seller(FirstName, LastName, Address, Mobile, Pincode, Email, Password, ConfirmPassword, ActiveFlag)\
-                    VALUES (:firstname, :lastname, :address, :mobile, :pincode, :email, , :password, :confirmpassword, :activeflag)';
-        let params = {
-            replacements:
-            {
-                firstname: newSeller.firstName,
-                lastName: newSeller.lastName,
-                address: newSeller.address,
-                mobile: newSeller.mobileNumber,
-                pincode: newSeller.pincode,
-                email: newSeller.email,
-                password: newSeller.password,
-                confirmPassword: newSeller.confirmPassword,
-                activeflag: 1
-            },
-        };
+    });
+}
 
-        addedSeller = await sequelize.query(sql, params);
-        return addedSeller.metadata;
-        
-    } catch(err) {
-        throw err;
-    }
+exports.addNewSeller = (newSeller) => {
+    return new Promise((resolve, reject) => {
+        let sql = 'INSERT INTO tb_seller(FirstName, LastName, Address, Mobile, Pincode, Email, Password, ConfirmPassword, ActiveFlag)\
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        let replacementsParams = [
+            newSeller.firstName,
+            newSeller.lastName,
+            newSeller.address,
+            newSeller.mobileNumber,
+            newSeller.pincode,
+            newSeller.email,
+            newSeller.password,
+            newSeller.confirmPassword,
+            1
+        ];
+
+        sql = mysql.format(sql, replacementsParams);
+        connection.query(sql, replacementsParams, (err, rows) => {
+            if(err) {
+                return reject(new Error(err));
+            }
+            resolve(rows);
+        });
+    });
 }
