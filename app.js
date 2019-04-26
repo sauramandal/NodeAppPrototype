@@ -54,6 +54,10 @@ app.use('/companies', require('./routes/company'));
 
 app.use('/orders', require('./routes/order'));
 
+app.use('/api/orders', require('./routes/api/order'));
+
+app.use('/api/users', require('./routes/api/user'));
+
 app.listen(port, function() {
     console.log(`Express server started on port: ${port}`);
 });
