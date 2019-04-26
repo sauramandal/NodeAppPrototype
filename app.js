@@ -43,7 +43,11 @@ app.post('/:id/editUser',signUpValidation, editUser);
 app.use('/users', require('./routes/user1'));
 app.use('/products', require('./routes/product')); //Custom Routes for Products
 //   /users/all
+//Custom Routes for Sellers
+app.use('/sellers', require('./routes/seller'));
 
+//Custom Routes for Shippers
+app.use('/shippers', require('./routes/shipper'));
 
 //Custom Routes for Companies
 app.use('/companies', require('./routes/company'));

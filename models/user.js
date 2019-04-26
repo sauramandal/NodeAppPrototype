@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     dob: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: true
     },
     device_type: {
       type: DataTypes.ENUM('ios','android','web'),
@@ -34,7 +34,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     email: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
     is_verified: {
       type: DataTypes.INTEGER(1),
@@ -57,7 +58,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     phone_number: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
     block_status: {
       type: DataTypes.INTEGER(1),
