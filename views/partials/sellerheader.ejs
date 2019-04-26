@@ -1,0 +1,63 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="/public/assets/css/adminTemplate.css">
+  </head>
+  <body>
+    <aside class="side-nav" id="show-side-navigation1">
+      <i class="fa fa-bars close-aside hidden-sm hidden-md hidden-lg" data-close="show-side-navigation1"></i>
+      <div class="heading">
+        <img src="https://uniim1.shutterfly.com/ng/services/mediarender/THISLIFE/021036514417/media/23148907008/medium/1501685726/enhance" alt="">
+        <div class="info">
+          <h3><a href="#">Seller</a></h3>
+          <p>Seller Details</p>
+        </div>
+      </div>
+      
+      <ul class="categories">
+        <li><i class="fa fa-home fa-fw" aria-hidden="true"></i><a href="#">Seller Section</a>
+          <ul class="side-nav-dropdown">
+            <li><a href="/sellers/new">Add a Seller</a></li>
+            <li><a href="#">View/Modify Seller</a></li>
+          </ul>
+        </li>
+        <li><i class="fa fa-support fa-fw"></i><a href="#">Shipper Section</a>
+          <ul class="side-nav-dropdown">
+            <li><a href="/shippers/new">Add a Shipper</a></li>
+          </ul>
+        </li>
+        <li><i class="fa fa-envelope fa-fw"></i><a href="#"> Contact us</a>
+          <ul class="side-nav-dropdown">
+            <li><a href="#">Write email to us</a></li>
+          </ul>
+        </li>
+        <li><i class="fa fa-users fa-fw"></i><a href="#"> Our team</a>
+          <ul class="side-nav-dropdown">
+            <li><a href="#">Lorem ipsum</a></li>
+          </ul>
+        </li>
+        <li><i class="fa fa-bolt fa-fw"></i><a href="#"> Testimonials</a>
+          <ul class="side-nav-dropdown">
+            <li><a href="#">Lorem ipsum</a></li>
+          </ul>
+        </li>
+        
+        <li><i class="fa fa-envelope-open-o fa-fw"></i><a href="#"> Messages <span class="num dang">0</span></a></li>
+        <li><i class="fa fa-wrench fa-fw"></i><a href="#"> Settings <span class="num prim">0</span></a>
+          <ul class="side-nav-dropdown">
+            <li><a id="LogoutButton" href="/">Logout</a>
+              <script>
+                  $('#LogoutButton').on('click', function(e) {
+                      document.cookie = "token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+                  });    
+              </script>
+            </li>
+          </ul>
+        </li>
+        
+      </ul>
+    </aside>
