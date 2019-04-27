@@ -1,8 +1,10 @@
-const mysql = require('mysql');
-const {connection} = require('./../database');
-const md5 = require('md5');
-const jwt = require('jsonwebtoken');
-const config = require('./../config');
+const mysql = require("mysql");
+const { connection } = require("./../database");
+const md5 = require("md5");
+const jwt = require("jsonwebtoken");
+const config = require("./../config");
+
+const { db } = require("./../db");
 
 module.exports = {
   checkUser: function(email) {
@@ -11,10 +13,10 @@ module.exports = {
       var table = ["user", "email", email];
       queryString = mysql.format(queryString, table);
       connection.query(queryString, (err, rows) => {
-        if (err)  {
+        if (err) {
           return reject({
-            "error": true,
-            "message": "Error in executing sql"
+            error: true,
+            message: "Error in executing sql"
           });
         }
         resolve({
@@ -41,37 +43,42 @@ module.exports = {
         post.block_status
       ];
       //Insert new user
-      var queryString = "INSERT INTO ?? (`first_name`, `last_name`, `dob`, `device_type`, `latitude`,`longitude`, `email`, `password`, \
+      var queryString =
+        "INSERT INTO ?? (`first_name`, `last_name`, `dob`, `device_type`, `latitude`,`longitude`, `email`, `password`, \
                         `phone_number`,`is_verified`,`block_status`)  \
                         values (?, ?, str_to_date(?,'%m-%d-%Y'), ?, ?, ?, ?, ?, ?, ?, ?) ";
       var table = ["user"];
       queryString = mysql.format(queryString, table);
       connection.query(queryString, userObject, (err, rows) => {
-          console.log("Hi");
-          if(err) {
-            return reject({
-              "error": true,
-              "message": "Error in executing sql"
-            });
-          }
-          resolve(rows);
-
+        console.log("Hi");
+        if (err) {
+          return reject({
+            error: true,
+            message: "Error in executing sql"
+          });
+        }
+        resolve(rows);
       });
     });
   },
-
 
   userLoginCheckService: function(post) {
     //return a new promise object
     return new Promise((resolve, reject) => {
       var queryString = "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?";
-      var tableValues = ["user", "password", md5(post.password), "email", post.email];
+      var tableValues = [
+        "user",
+        "password",
+        md5(post.password),
+        "email",
+        post.email
+      ];
       queryString = mysql.format(queryString, tableValues);
       connection.query(queryString, (err, rows) => {
-        if(err){
+        if (err) {
           return reject({
-            "error": true,
-            "message": "Error in executing sql"
+            error: true,
+            message: "Error in executing sql"
           });
         }
         resolve(rows);
@@ -96,17 +103,17 @@ module.exports = {
 
   userLogIn: function(rows) {
     return new Promise((resolve, reject) => {
-      if(rows.length) {
-        var token = jwt.sign({rows}, config.secret, {expiresIn: "1h"});
+      if (rows.length) {
+        var token = jwt.sign({ rows }, config.secret, { expiresIn: "1h" });
         return resolve({
-          "error": false, 
-          "message": "Token generated for user",
+          error: false,
+          message: "Token generated for user",
           token
         });
       }
       return reject({
-        "error": true,
-        "message": "error in token generation"
+        error: true,
+        message: "error in token generation"
       });
     });
   },
@@ -117,10 +124,10 @@ module.exports = {
       var values = ["user", "user_id", userId];
       queryString = mysql.format(queryString, values);
       connection.query(queryString, (err, rows, fields) => {
-        if(err) {
+        if (err) {
           return reject({
-            "error": true,
-            "message": err
+            error: true,
+            message: err
           });
         }
         resolve(rows);
@@ -134,18 +141,17 @@ module.exports = {
       var values = ["user"];
       queryString = mysql.format(queryString, values);
       connection.query(queryString, (err, rows) => {
-        if(err) {
+        if (err) {
           return reject({
-            "error": false,
-            "message": "error in query execution"
+            error: false,
+            message: "error in query execution"
           });
         }
-          return resolve({
-            "error": true,
-            "message": "query executed successfully",
-            "users": rows
-          });
-
+        return resolve({
+          error: true,
+          message: "query executed successfully",
+          users: rows
+        });
       });
     });
   },
@@ -168,28 +174,59 @@ module.exports = {
         id
       ];
       //console.log(editedUser);
-      var queryString = "UPDATE ?? SET `first_name` = ?,`last_name` = ?, `email` = ?, `password` = ?,\
+      var queryString =
+        "UPDATE ?? SET `first_name` = ?,`last_name` = ?, `email` = ?, `password` = ?,\
                         `dob` = ?, `phone_number` = ?,`device_type` = ?,`latitude` = ?,\
                         `longitude` = ?, `is_verified` = ?, `block_status` = ? WHERE user_id = ?";
-          
+
       var table = ["user"];
       queryString = mysql.format(queryString, table);
       console.log(queryString);
-      
+
       console.log("Hi");
       connection.query(queryString, editedUser, (err, rows) => {
-        if(err) {
+        if (err) {
           console.log("rejected");
           return reject({
-            "error": true,
-            "message": "error in sql query execution"
+            error: true,
+            message: "error in sql query execution"
           });
         }
         resolve({
-          "error": false,
-          "message": "query executed successfully"
+          error: false,
+          message: "query executed successfully"
         });
       });
     });
+  },
+
+  createUser: async (req, res) => {
+    try {
+      // Insert new user
+      return await db.user
+        .create({
+          first_name: req.body.firstName,
+          last_name: req.body.lastName,
+          dob: req.body.dob,
+          device_type: "web",
+          latitude: req.body.latitude,
+          longitude: req.body.longitude,
+          email: req.body.email,
+          phone_number: req.body.mobile,
+          password: md5(req.body.password),
+          is_verified: 1,
+          block_status: 0
+        })
+        .then(res.status(200).send({
+          error: false,
+          message: "user added successfully",
+        }))
+        .catch(error => {
+          res.status(400).send(error);
+        });
+    } catch (error) {
+      console.log(error);
+      throw new Error(error);
+    }
   }
-}
+};
