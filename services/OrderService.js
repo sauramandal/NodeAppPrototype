@@ -13,7 +13,7 @@ exports.addOrder = (req, res) => {
       DELIVERY_ADDRESS: req.body.DELIVERY_ADDRESS,
       SHIPPER_ID: req.body.SHIPPER_ID
     })
-    .then(res.status(200).send("Order add successfully"))
+    .then(res.status(200).send("Order added successfully"))
     .catch(error => {
       res.status(400).send(error);
     });
