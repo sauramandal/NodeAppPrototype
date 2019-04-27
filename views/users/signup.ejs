@@ -12,12 +12,12 @@
 <body>
     <div class="form-wrap">
         <div class="tabs">
-            <h3 class="signup-tab"><a class="active" href="#signup-tab-content">Sign Up</a></h3>
-            <h3 class="login-tab"><a href="#login-tab-content">Login</a></h3>
+            <h3 class="signup-tab"><a href="#signup-tab-content">Sign Up</a></h3>
+            <h3 class="login-tab"><a class="active" href="#login-tab-content">Login</a></h3>
         </div><!--.tabs-->
-    
+
         <div class="tabs-content">
-            <div id="signup-tab-content" class="active">
+            <div id="signup-tab-content">
                 <form class="signup-form" id="SignUpForm" action="" method="post">
                     <input type="hidden" name="latitude" value="0.00"/>
                     <input type="hidden" name="longitude" value="0.00"/>
@@ -48,7 +48,7 @@
                         <label for="name" id="">Password</label>
                         <input type="password" class="input" name="password" id="SignupPassword" autocomplete="off">
                     </div>
-                    
+
                     <button id="Register" class="btn btn-outline-primary">Sign Up</button>
                 </form>
                 <div class="help-text">
@@ -56,8 +56,8 @@
                     <p><a href="#">Terms of service</a></p>
                 </div><!--.help-text-->
             </div><!--.signup-tab-content-->
-    
-            <div id="login-tab-content">
+
+            <div id="login-tab-content" class="active">
                 <form class="login-form" id="LoginForm" action="/login" method="post">
                     <div>
                         <label for="name" id="">Email</label>
