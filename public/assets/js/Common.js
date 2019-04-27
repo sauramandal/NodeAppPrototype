@@ -1,7 +1,10 @@
-//This file contains the common functionality 
-$(document).ready(function() {
-    $('#AddToCart').click(function(event) {
-        event.preventDefault();
-        console.log('Addtocart');
-    });
+$(document).ready(function () {
+  $(".slider").slick({
+    // autoplay: true,
+    dots: true,
+    arrows: true,
+    slidesToShow: 5,
+    slidesToScroll: 5
+  });
+
 });
