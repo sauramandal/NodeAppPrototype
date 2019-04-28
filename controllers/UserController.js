@@ -71,7 +71,6 @@ exports.userlogin = async (req, res) => {
 
     if (isUserExisted.length) {
       var loggedIn = await UserService.userLogIn(isUserExisted);
-      console.log(loggedIn.token);
       return res.json(JSON.stringify(loggedIn));
     } else {
       return res.json({

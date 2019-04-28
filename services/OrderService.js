@@ -39,6 +39,18 @@ exports.getAllOrders = async (req, res) => {
   }
 };
 
+exports.getOrdersByCustomerId = async (req, res) => {
+  try {
+    return await db.tb_order.findAll({
+      where: {
+        USER_ID: req.query.customerid
+      }
+    });
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
 exports.getOrderById = async (req, res) => {
   try {
     return await db.tb_order.findOne({
