@@ -359,5 +359,20 @@ module.exports = {
     } catch (err) {
       throw new Error(err);
     }
+  },
+
+  /**
+   * Api menthod for geting product details
+   */
+  getProductDetails: async (req, res) => {
+    try {
+      return await db.tb_product.findOne({
+        where: {
+          id: req.params.id
+        }
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
   }
 };
