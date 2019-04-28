@@ -5,12 +5,28 @@ const jwt = require('jsonwebtoken');
 const config = require('./../config');
 
 module.exports = {
+	addCategory: function(categoryName, categoryDesc) {
+		return new Promise((resolve, reject) => {
+			var queryString = "INSERT INTO ?? (`CATEGORY_NAME`,`CATEGORY_DESC`) VALUES(?,?)";
+			var table = ["tb_category"];
+			queryString = mysql.format(queryString, table);
+			connection.query(queryString, [categoryName, categoryDesc], (err, rows) => {
+				if(err) {
+					return reject({
+						"error": true,
+						"message": "error in executing sql query"
+					});
+				}
+				resolve(rows);
+			});
+		});
+	},
 	addProduct: function(product) {
 		return new Promise((resolve, reject) => {
 			var queryString = "INSERT INTO ?? (`product_name`,`product_description`,`product_price`,`product_image`,\
 								`created_at`,`company_id`,`category_id`) VALUES (?,?,?,?,?,?,?)";
 			var table = ["tb_product"];
-			var productObject = [ 
+			var productObject = [
 				product.product_name,
 				product.product_description,
 				product.product_price,
@@ -27,12 +43,9 @@ module.exports = {
 						"message": "error in executing sql query"
 					});
 				}
-				resolve({
-					"error": false,
-					"message": "query executed successfully"
-				});
+				resolve(rows);
 			});
-		});		
+		});
 	},
 
 	getCompanies: function() {
@@ -41,11 +54,11 @@ module.exports = {
 			let queryString = "SELECT id, company_name FROM ??";
 			let table = ["tb_company"];
 			queryString = mysql.format(queryString, table);
-	
+
 			connection.query(queryString, (err, rows) => {
 				if(err) {
 					return reject(new Error(err));
-				} 
+				}
 				//console.log(rows);
 				resolve(rows);
 			});
@@ -78,7 +91,7 @@ module.exports = {
 						"error": true,
 						"message": "query failed execution"
 					});
-				} 
+				}
 				resolve({
 					"error": false,
 					"message": "executed successfully",
@@ -86,7 +99,7 @@ module.exports = {
 				});
 			});
 		});
-	}, 
+	},
 
 	showProduct: function(productId) {
 		return new Promise((resolve, reject) => {
@@ -100,7 +113,7 @@ module.exports = {
 				resolve(rows);
 			});
 		});
-	}, 
+	},
 
 	getOrderId: function(userId) {
 		return new Promise((resolve, reject) => {
@@ -111,7 +124,7 @@ module.exports = {
 				if(err) {
 					reject({
 						"message": "err in query execution",
-						err 
+						err
 					});
 				}
 				resolve(rows);
@@ -128,7 +141,7 @@ module.exports = {
 				if(err) {
 					reject({
 						"message": "err in query execution",
-						err 
+						err
 					});
 				}
 				resolve(rows);

@@ -1,0 +1,63 @@
+<% include ../partials/sellerheader %>
+
+<style>
+    * {
+        font-size: 14px;
+    }
+</style>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="page-header">
+
+      </div>
+
+      <div class="row justify-content-left">
+        <div class="col-md-6">
+          <div class="card">
+            <header class="card-header">
+              <h4 class="card-title mt-2">Add Category</h4>
+            </header>
+            <article class="card-body">
+              <form data-toggle="validator" novalidate="true" enctype="multipart/form-data" id="AddCategory" name="addCategory" method="POST" action="">
+                <div class="form-body">
+                  <div class="row">
+                    <div class="form-group col-md-12">
+                      <label for="CategoryName" class="control-label">Category Name</label>
+                      <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Category Name" maxlength="200" required/>
+                      <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="form-group col-md-12">
+                      <label for="CategoryDesciption" class="control-label">Category Description</label>
+                      <textarea rows="4" cols="50" class="form-control" name="category_description" id="category_description" placeholder="Write a description" maxlength="200" required></textarea>
+                      <div class="help-block with-errors" style="color: red; font-size: 14px;"></div>
+                    </div>
+                  </div>
+
+                  <!-- Submit button -->
+                  <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" id="Register" class="btn btn-outline-primary">Add</button>
+                            <input id="Clear" class="btn btn-default" type="reset" name="clear" value="Reset" onclick="resetForm();" />
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="./../public/assets/js/AddCategory.js"></script>
+<script type="text/javascript" src="./../public/assets/js/adminDashboard.js"></script>
+</body>
+</html>

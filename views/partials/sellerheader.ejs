@@ -6,6 +6,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
     <link rel="stylesheet" href="/public/assets/css/adminTemplate.css">
+    <script src="/public/assets/plugins/jquery.min.js"></script>
+    <script type="text/javascript" src="/public/assets/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/public/assets/bootstrap/css/bootstrap.min.css">
+    <script type="text/javascript" src="/public/assets/plugins/validator.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
   </head>
   <body>
     <aside class="side-nav" id="show-side-navigation1">
@@ -17,17 +25,17 @@
           <p>Seller Details</p>
         </div>
       </div>
-      
+
       <ul class="categories">
-        <li><i class="fa fa-home fa-fw" aria-hidden="true"></i><a href="#">Seller Section</a>
+        <li><i class="fa fa-home fa-fw" aria-hidden="true"></i><a href="#">Product Section</a>
           <ul class="side-nav-dropdown">
-            <li><a href="/sellers/new">Add a Seller</a></li>
-            <li><a href="#">View/Modify Seller</a></li>
+            <li><a href="/products/addProduct">Add a product</a></li>
+            <li><a href="#">View/Modify product</a></li>
           </ul>
         </li>
-        <li><i class="fa fa-support fa-fw"></i><a href="#">Shipper Section</a>
+        <li><i class="fa fa-support fa-fw"></i><a href="#">Category Section</a>
           <ul class="side-nav-dropdown">
-            <li><a href="/shippers/new">Add a Shipper</a></li>
+            <li><a href="/products/addCategory">Add a Category</a></li>
           </ul>
         </li>
         <li><i class="fa fa-envelope fa-fw"></i><a href="#"> Contact us</a>
@@ -45,7 +53,7 @@
             <li><a href="#">Lorem ipsum</a></li>
           </ul>
         </li>
-        
+
         <li><i class="fa fa-envelope-open-o fa-fw"></i><a href="#"> Messages <span class="num dang">0</span></a></li>
         <li><i class="fa fa-wrench fa-fw"></i><a href="#"> Settings <span class="num prim">0</span></a>
           <ul class="side-nav-dropdown">
@@ -53,11 +61,11 @@
               <script>
                   $('#LogoutButton').on('click', function(e) {
                       document.cookie = "token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
-                  });    
+                  });
               </script>
             </li>
           </ul>
         </li>
-        
+
       </ul>
     </aside>

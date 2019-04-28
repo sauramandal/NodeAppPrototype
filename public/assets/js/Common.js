@@ -4,7 +4,8 @@ $(document).ready(function () {
     dots: true,
     arrows: true,
     slidesToShow: 5,
-    slidesToScroll: 5
+    slidesToScroll: 5,
+    
   });
 
 });

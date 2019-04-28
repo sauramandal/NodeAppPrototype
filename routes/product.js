@@ -8,6 +8,32 @@ const fileUpload = require('express-fileupload');
 const {ensureToken} = require('../middleware/ensureToken');
 const UserService = require('./../services/UserService');
 
+router.get('/addCategory', async(req, res) => {
+	try {
+		res.render('product/addCategory.ejs', {
+			title: 'Add a category'
+		});
+	} catch(err) {
+		return res.render('errorPage', {
+			message: 'Resource not found'
+		})
+	}
+});
+
+router.post('/addCategory', async(req, res) => {
+	try {
+		let categoryName = req.body.category_name;
+		let categoryDesc = req.body.category_description;
+		let addedCategory = ProductService.addCategory(categoryName, categoryDesc);
+		return res.json(JSON.stringify(addedCategory));
+	} catch(err) {
+		return res.json({
+			message: 'Error occurred',
+			error: err
+		});
+	}
+});
+
 router.get('/addProduct', async (req, res) => {
 	try {
 		//steps to happen concurrently asynchronous using Promise.all
@@ -15,7 +41,7 @@ router.get('/addProduct', async (req, res) => {
 			ProductService.getCompanies(),
 			ProductService.getCategories()
 		]);
-		
+
 		return res.render('product/add-product.ejs', {
 			title: 'Add a product',
 			companies,
@@ -27,11 +53,11 @@ router.get('/addProduct', async (req, res) => {
 			message: 'Ooops'
 		});
 	}
-	
+
 	//method 2
 	/*
 	const promiseArr = [
-		ProductService.getCompanies(), 
+		ProductService.getCompanies(),
 		ProductService.getCategories()
 	];
 
@@ -52,8 +78,8 @@ router.get('/addProduct', async (req, res) => {
 		return res.render('error_page', {
 			message: ''
 		});
-	}); */	
-	
+	}); */
+
 });
 
 router.post('/addProduct', (req, res) => {
@@ -85,7 +111,7 @@ router.post('/addProduct', (req, res) => {
 			if(err) {
 				return res.status(500).send(err);
 			}
-			
+
 			ProductService
 				.addProduct(product)
 				.then((response) => {
@@ -94,7 +120,7 @@ router.post('/addProduct', (req, res) => {
 				})
 				.catch((err) => {
 					return res.status(500).send(err);
-				}); 
+				});
 		});
 	}
 	else {
@@ -138,7 +164,7 @@ router.get('/:id/show', ensureToken, async(req, res) => {
 					productDetails: prodDetails,
 					userData,
 					userId,
-					productId 
+					productId
 				});
 			}
 			return res.json({"message": 'unable to show product'});
@@ -159,14 +185,14 @@ router.get('/addToCart', ensureToken, async(req, res) => {
 		var userId = req.query.UserId;
 		var quantity = req.query.quantity;
 		var currentOrderAmount = req.query.ProductPrice;
-		var price; 
+		var price;
 		var totalDiscountedPrice = 0.0;
 		//update orders table iff user_id is not present in orders table
 		var getOrderId = await ProductService.getOrderId(userId);
-		
+
 		if(getOrderId.length == 0) {
 			//Add current order
-			
+
 			var orderDate = new Date();
 			var orderAmount = 0;
 			var isPlaced = false;
@@ -178,12 +204,12 @@ router.get('/addToCart', ensureToken, async(req, res) => {
 			var currentOrderId = getOrderId[0].ID;
 			//block duplicate orders from same user
 			var isProductRepeated = await ProductService.checkExistingProductOrder(currentOrderId, productId);
-			if(isProductRepeated) { //show cart items 
+			if(isProductRepeated) { //show cart items
 				console.log('Repeated');
 			}
 			else {
 				var addAndUpdateOrderDetails = await ProductService.addOrderDetails(currentOrderId, productId, quantity, currentOrderAmount);
-			}	
+			}
 		}
 		//get all the cart items of current user and show it
 		var showCartItems = await ProductService.getAllCartItems(currentOrderId);
@@ -222,7 +248,7 @@ router.get('/showCartItems', ensureToken, async(req, res) => {
 			"details": e
 		});
 	}
-	
+
 });
 
 module.exports = router;

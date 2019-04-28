@@ -19,20 +19,35 @@ var dashboard = async(req, res) => {
         console.log('got token');
         if(userId) {
             userLogInfo = await UserService.showUserData(userId);
-            let [ getRandomProducts, getTopTenProducts] = await Promise.all([
-                IndexService.getRandomizedProducts(),
-                IndexService.getTopTenSoldProducts()
-            ]);
-            let getTopPhones = await IndexService.getTopMobiles();
-            console.log(getTopPhones);
-            return res.render('index.ejs', {
-                title: 'Dashboard',
-                getRandomProducts,
-                getTopTenProducts,
-                getTopPhones,
+
+            if(userLogInfo[0].roles === 1) {
+              return res.render('adminDashboard.ejs', {
+                title: 'Admin Dashboard',
                 userData: userLogInfo,
                 token: req.token
-            });
+              });
+            } else if(userLogInfo[0].roles == 3) {
+              return res.render('sellerDashboard.ejs', {
+                title: 'Seller Dashboard',
+                userData: userLogInfo,
+                token: req.token
+              });
+            } else {
+              let [ getRandomProducts, getTopTenProducts] = await Promise.all([
+                  IndexService.getRandomizedProducts(),
+                  IndexService.getTopTenSoldProducts()
+              ]);
+              let getTopPhones = await IndexService.getTopMobiles();
+              console.log(getTopPhones);
+              return res.render('index.ejs', {
+                  title: 'Dashboard',
+                  getRandomProducts,
+                  getTopTenProducts,
+                  getTopPhones,
+                  userData: userLogInfo,
+                  token: req.token
+              });
+            }
         }
         return res.render('users/signup.ejs', {
             title: 'Welcome to User Auth page',
@@ -69,13 +84,13 @@ var dashboard = async(req, res) => {
                 token: req.token
             });
         }*/
-  
+
     } catch(err) {
         return res.json({
             error: err
         });
     }
-    
+
 };
 
 module.exports = {dashboard};
