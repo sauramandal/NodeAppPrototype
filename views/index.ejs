@@ -22,7 +22,7 @@
         <!-- If admin/seller layout -->
         <% if(userData[0].roles === 1) { %>
             <% include adminDashboard.ejs %>
-        <% } else if(userData[0].roles === 3){ %>
+        <% } else if(userData[0].roles === 2){ %>
             <% include sellerDashboard.ejs %>
         <% } else { %>
             <!-- end layout -->
