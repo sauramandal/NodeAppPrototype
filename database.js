@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
   user: 'pritimaysaura',
   password: config.dbPassword,
   database: config.databaseName,
-  debug: true
+  debug: false
 });
 
 // connection.connect((err) => {

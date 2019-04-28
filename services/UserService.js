@@ -3,6 +3,7 @@ const { connection } = require("./../database");
 const md5 = require("md5");
 const jwt = require("jsonwebtoken");
 const config = require("./../config");
+const Joi = require('joi');
 
 const { db } = require("./../db");
 
@@ -65,6 +66,23 @@ module.exports = {
   userLoginCheckService: function(post) {
     //return a new promise object
     return new Promise((resolve, reject) => {
+      const schema = Joi.object({
+        email: Joi.string().required(),
+        password: Joi.string().min(6).required()
+    }).with('email', 'password');
+
+      const login = {
+        email: post.email,
+        password: post.password
+      };
+      const validationResult = Joi.validate(login, schema);
+      if (validationResult.error) {
+        return reject({
+          error: true,
+          message: "Validation error"
+        });
+      }
+
       var queryString = "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?";
       var tableValues = [
         "user",

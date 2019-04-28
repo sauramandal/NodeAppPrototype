@@ -23,7 +23,19 @@ exports.getAllOrders = async function(req, res) {
         });
     } catch(err) {
         console.log(err);
-        res.status(500).send(`unable to find order`);
+        res.status(500).send(`unable to find orders`);
+    }
+}
+
+exports.getOrdersByCustomerId = async function(req, res) {
+    try {
+        let orders = await OrderService.getOrdersByCustomerId(req, res);
+        return res.json({
+            orders: orders
+        });
+    } catch(err) {
+        console.log(err);
+        res.status(500).send(`unable to find orders`);
     }
 }
 

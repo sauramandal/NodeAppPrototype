@@ -58,6 +58,8 @@ app.use('/api/orders', require('./routes/api/order'));
 
 app.use('/api/users', require('./routes/api/user'));
 
+app.use('/api/products', require('./routes/api/product'));
+
 app.listen(port, function() {
     console.log(`Express server started on port: ${port}`);
 });
