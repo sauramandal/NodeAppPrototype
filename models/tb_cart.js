@@ -1,25 +1,34 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('tb_role', {
+  return sequelize.define('tb_cart', {
     Id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
-    Name: {
-      type: DataTypes.STRING(100),
+    CustomerId: {
+      type: DataTypes.INTEGER(11),
       allowNull: false
     },
-    Description: {
-      type: DataTypes.STRING(256),
+    ProductId: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      references: {
+        model: 'tb_product',
+        key: 'id'
+      }
+    },
+    Quantity: {
+      type: DataTypes.INTEGER(11),
       allowNull: false
     },
     CreatedBy: {
       type: DataTypes.INTEGER(11),
       allowNull: false
     },
-    CreateDate: {
+    CreatedDate: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
@@ -38,6 +47,6 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: '1'
     }
   }, {
-    tableName: 'tb_role'
+    tableName: 'tb_cart'
   });
 };

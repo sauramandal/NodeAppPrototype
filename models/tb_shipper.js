@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     Address: {
-      type: DataTypes.INTEGER(255),
+      type: DataTypes.STRING(255),
       allowNull: false
     },
     PhoneNumber: {
