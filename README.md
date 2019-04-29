@@ -1,6 +1,3 @@
-![Shopping Schema](https://user-images.githubusercontent.com/8455623/56482314-1ee11f00-64e1-11e9-8f3e-88ecde7448c9.png)
-
-
 ### Run in dev
 ```
 npm run dev
