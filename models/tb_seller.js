@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     Mobile: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.STRING(25),
       allowNull: false,
       unique: true
     },
@@ -35,7 +35,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     CreatedBy: {
       type: DataTypes.INTEGER(11),
-      allowNull: false
+      allowNull: true
     },
     CreatedDate: {
       type: DataTypes.DATE,

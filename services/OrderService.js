@@ -2,7 +2,7 @@ const { db } = require("./../db");
 const sequelize = db.sequelize;
 
 exports.addOrder = (req, res) => {
-  let today = new Date().toISOString().split('T')[0];
+  let today = new Date().toISOString().split("T")[0];
 
   db.tb_order
     .create({
@@ -74,12 +74,11 @@ exports.updateOrderById = async (req, res) => {
   };
 
   try {
-    return await db.tb_order
-      .update(order, {
-        where: {
-          ID: req.params.id
-        }
-      });
+    return await db.tb_order.update(order, {
+      where: {
+        ID: req.params.id
+      }
+    });
   } catch (err) {
     throw new Error(err);
   }

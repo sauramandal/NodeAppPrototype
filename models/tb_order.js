@@ -10,7 +10,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     USER_ID: {
       type: DataTypes.INTEGER(11),
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'user',
+        key: 'user_id'
+      }
     },
     ORDER_DATE: {
       type: DataTypes.DATEONLY,
@@ -30,6 +34,19 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     SHIPPER_ID: {
+      type: DataTypes.INTEGER(11),
+      allowNull: true,
+      references: {
+        model: 'tb_shipper',
+        key: 'Id'
+      }
+    },
+    ShipmentMethod: {
+      type: DataTypes.ENUM('Cash on delivery','Debit/Credit Card'),
+      allowNull: false,
+      defaultValue: 'Cash on delivery'
+    },
+    TRACKING_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: true
     }
