@@ -71,7 +71,7 @@ exports.userlogin = async (req, res) => {
 
     if (isUserExisted.length) {
       var loggedIn = await UserService.userLogIn(isUserExisted);
-      return res.json(JSON.stringify(loggedIn));
+      return res.json(loggedIn);
     } else {
       return res.json({
         message: "Email or password is invalid",
