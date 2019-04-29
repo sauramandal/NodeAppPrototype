@@ -348,8 +348,7 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 			let queryString = "SELECT COUNT(user_id) FROM ?? WHERE ? = ??; ";
 		});
-	}
-}
+	},
   /**
    * Api menthod for geting products
    */

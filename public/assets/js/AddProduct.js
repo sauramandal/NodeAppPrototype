@@ -47,6 +47,7 @@ var showNotification = function(title, text, type, callback, value) {
 };
 
 var onRegisterClick = function() {
+  $('#myModal').modal('show');
   resetForm();
 };
 

@@ -6,6 +6,7 @@
     box-sizing: border-box;
     font-family: 'Droid Sans', sans-serif;
     outline: none;
+    font-size: 14px;
   }
   ::-webkit-scrollbar {
     background: transparent;

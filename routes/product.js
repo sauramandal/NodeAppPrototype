@@ -82,6 +82,11 @@ router.get('/addProduct', async (req, res) => {
 
 });
 
+//route to add product details
+router.get('/addProductDetails', (req, res) => {
+	
+});
+
 router.post('/addProduct', (req, res) => {
 	if(!req.files) {
 		return res.status(400).send("No files were uploaded");
@@ -131,6 +136,8 @@ router.post('/addProduct', (req, res) => {
 		});
 	}
 });
+
+
 
 router.get('/:id/editProduct', (req, res) => {
 	let productId = req.params.id;
