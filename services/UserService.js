@@ -126,7 +126,7 @@ module.exports = {
         return resolve({
           error: false,
           message: "Token generated for user",
-          token
+          token: token
         });
       }
       return reject({
