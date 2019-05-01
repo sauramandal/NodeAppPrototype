@@ -1,5 +1,12 @@
 const CartService = require('../services/CartService');
 
+/**
+ * add cart item
+ *
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
 exports.addToCart = async function(req, res) {
     try {
         let result = await CartService.addToCart(req, res);
@@ -13,6 +20,13 @@ exports.addToCart = async function(req, res) {
     }
 }
 
+/**
+ * get cart items
+ *
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
 exports.getCartItems = async function(req, res) {
     try {
         let results = await CartService.getCartItems(req, res);

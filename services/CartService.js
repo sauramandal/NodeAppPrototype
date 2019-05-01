@@ -1,6 +1,13 @@
 const { db } = require("./../db");
 const sequelize = db.sequelize;
 
+/**
+ * Add cart item
+ *
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
 exports.addToCart = async (req, res) => {
   try {
     return await db.tb_cart.create({
@@ -14,6 +21,13 @@ exports.addToCart = async (req, res) => {
   }
 };
 
+/**
+ * Get all cart items
+ *
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
 exports.getCartItems = async (req, res) => {
   try {
     let sql = `SELECT C.id as cart_id, P.id as product_id, P.product_name as product_name, C.Quantity as product_quantity, P.product_price as product_price, P.product_description as product_description, P.product_image as product_image  
