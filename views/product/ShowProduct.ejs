@@ -131,7 +131,13 @@
                     <li><a href="#">Another action</a></li>
                     <li><a href="#">Something else here</a></li>
                     <li class="divider"></li>
-                    <li><a href="/signup">Logout</a></li>
+                    <li><a href="/signup">Logout</a>
+                        <script>
+                            $('#LogoutButton').on('click', function(e) {
+                              document.cookie = "token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+                            });
+                        </script>
+                    </li>
                   </ul>
                 </li>
               </ul>
