@@ -1,0 +1,127 @@
+<% include ../partials/sellerheader %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="page-header">
+
+            </div>
+
+            <div class="row justify-content-left">
+                <div class="col-md-6">
+                    <div class="card">
+                        <header class="card-header">
+                            <h4 class="card-title mt-2">Add Product Details</h4>
+                        </header>
+                        <article class="card-body">
+                            <form data-toggle="validator" novalidate="true" enctype="multipart/form-data"
+                                id="AddProductDetails" name="addProductDetails" method="POST" action="">
+                                <div class="form-body">
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="ProductId" class="control-label">Product</label>
+                                            <input id="product_id" class="typeahead tt-query form-control" spellcheck="false" autocomplete="off" name="product_id" type="text" required/>
+                                            <div class="help-block with-errors" style="color: red; font-size: 14px;">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="ProductCode" class="control-label">Product Code</label>
+                                            <input type="text" class="form-control" name="product_code"
+                                                id="product_code" placeholder="Product Code" required />
+                                            <div class="help-block with-errors" style="color: red; font-size: 14px;">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="ProductColor" class="control-label">Product Color</label>
+                                            <input type="text" class="form-control" name="product_color"
+                                                id="product_color" placeholder="Product Color" required />
+                                            <div class="help-block with-errors" style="color: red; font-size: 14px;">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="ProductBrand" class="control-label">Product Brand</label>
+                                            <input type="text" class="form-control" name="product_brand"
+                                                id="product_brand" placeholder="Product Brand" required />
+                                            <div class="help-block with-errors" style="color: red; font-size: 14px;">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="ProductDimension" class="control-label">Product
+                                                Dimension</label>
+                                            <input type="text" class="form-control" name="product_dimension"
+                                                id="product_dimension" placeholder="Product Dimension" required />
+                                            <div class="help-block with-errors" style="color: red; font-size: 14px;">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="ProductReturnPolicy"
+                                                class="control-label">IsReturnPolicy</label>
+                                            <input type="text" class="form-control" name="product_returnpolicy"
+                                                id="product_returnpolicy" placeholder="IsReturnPolicy" required />
+                                            <div class="help-block with-errors" style="color: red; font-size: 14px;">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="ProductWarranty" class="control-label">Warranty</label>
+                                            <input type="text" class="form-control" name="product_warranty"
+                                                id="product_warranty" placeholder="Warranty" required />
+                                            <div class="help-block with-errors" style="color: red; font-size: 14px;">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="ProductWeight" class="control-label">Product Weight</label>
+                                            <input type="text" class="form-control" name="product_weight"
+                                                id="product_weight" placeholder="Weight" required />
+                                            <div class="help-block with-errors" style="color: red; font-size: 14px;">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Submit button -->
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <button type="submit" id="Register" class="btn btn-outline-primary">Add
+                                                    Details</button>
+                                                <input id="Clear" class="btn btn-default" type="reset" name="clear"
+                                                    value="Reset" onclick="resetForm();" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="./../../public/assets/js/AddProductDetails.js"></script>
+<script type="text/javascript" src="./../../public/assets/js/adminDashboard.js"></script>
+</body>
+
+</html>

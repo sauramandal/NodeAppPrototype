@@ -82,9 +82,38 @@ router.get('/addProduct', async (req, res) => {
 
 });
 
+router.get('/addProductDetails', async(req, res) => {
+	try {
+		res.render('product/addProductDetails.ejs', {
+			title: 'Add product details'
+		});
+	} catch(err) {
+		return res.status(500).send("Error in rendering");
+	}
+});
+
+//API to search products based on relevant string match
+router.get('/search', async(req, res) => {
+	try {
+		connection.query('SELECT id, product_name FROM tb_product WHERE product_name LIKE "%' + req.query.query +'%"', function(err, rows, fields) {
+			if(err) {
+				throw new Error("Error occurred while executing query");
+			}	
+			let data = [];
+			for(var i=0;i<rows.length;i++) {
+				data.push(rows[i].product_name+','+rows[i].id);
+			}
+			res.send(JSON.stringify(data));
+		});
+	} catch(err) {
+		return res.status(500).send("Error");
+	}
+});
+
 //route to add product details
-router.get('/addProductDetails', (req, res) => {
-	
+router.post('/addProductDetails', async(req, res) => {
+	console.log(req.body);
+	return res.json(JSON.stringify(req.body));
 });
 
 router.post('/addProduct', (req, res) => {
