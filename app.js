@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mysql = require('mysql');
 const fileUpload = require('express-fileupload');
+const multer = require('multer');
+const upload = multer({ dest: './uploads/' });
 const jwt = require('jsonwebtoken');
 const config = require('./config');
 const cors = require('cors');
@@ -15,6 +17,7 @@ const {check, validationResult} = require('express-validator/check');
 const {addNewUserTemplate, addNewUser, userLoginCheck, findAllUsers, myProtectedRoute, editUser} = require('./routes/user');
 const {dashboard} = require('./routes/index');
 const {editCompanyDetails} = require('./routes/company');
+
 
 var app = express();
 var port = process.env.PORT || 8000;

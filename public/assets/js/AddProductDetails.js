@@ -8,6 +8,7 @@ $(document).ready(function(){
             });
         }
     });
+    
     $('#AddProductDetails').validator().on('submit', function(e) {
         if(e.isDefaultPrevented())
         {
@@ -22,6 +23,8 @@ $(document).ready(function(){
                 method: 'POST',
                 url: '/products/addProductDetails',
                 data: formData,
+                contentType: false, 
+                processData: false,
                 success: successHandler
             });
         }

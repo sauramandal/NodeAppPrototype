@@ -110,10 +110,19 @@ router.get('/search', async(req, res) => {
 	}
 });
 
-//route to add product details
+//route to add product details with max of 10 images
 router.post('/addProductDetails', async(req, res) => {
-	console.log(req.body);
-	return res.json(JSON.stringify(req.body));
+	if(!req.files) {
+		return res.json({
+			message: "No files were uploaded"
+		});
+	}
+	else {
+		var uploadedFiles = [];
+		console.log(req.body);
+		return res.json(JSON.stringify(req.body));
+	}
+	
 });
 
 router.post('/addProduct', (req, res) => {
